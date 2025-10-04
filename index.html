@@ -3,40 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>前端作業 - Main Page</title>
+  <title>我的 HTML 作業集 - Main Page</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container">
-      <h1>前端作業們</h1>
-      <p class="subtitle">要看哪週點那下去就對了</p>
+      <h1>前端作業們 | 111319022 徐丞睿</h1>
+      <p class="subtitle">點擊以下任一項目即可瀏覽或查看原始檔案</p>
     </div>
   </header>
 
   <main class="container">
     <section class="grid">
-      <!-- Week 3 的作業連結 -->
-      <a class="week-card" href="前端Week3作業-vegetable/index.html" target="_blank" rel="noopener">
+      <!-- Week 3 - 作業頁面 -->
+      <div class="week-card">
         <div class="week-number">Week 3</div>
-        <div class="week-title">Vegetables page</div>
-      </a>
-
-      <!-- 要新增更多週，複製上方 <a class="week-card"> 標籤並修改內容 -->
-    </section>
-
-    <section class="notes">
-      <h2>提示</h2>
-      <ul>
-        <li>資料夾名稱若包含空格，連結中空格需以 <code>%20</code> 編碼。</li>
-        <li>建議改為不含空格的命名（例如 <code>week3-vegetables</code>）。</li>
-        <li>每個資料夾內都要有 <code>index.html</code>，GitHub Pages 才能正確顯示。</li>
-      </ul>
+        <div class="week-title">Vegetables Page</div>
+        <div class="buttons">
+          <a class="btn view" href="week3-vegetables/index.html" target="_blank" rel="noopener">瀏覽網頁</a>
+          <a class="btn code" href="https://github.com/111319022/f2e/tree/main/%E5%89%8D%E7%AB%AFWeek3%E4%BD%9C%E6%A5%AD-vegetable" target="_blank" rel="noopener">查看GitHub</a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">Built by Ray 大帥哥</div>
+    <div class="container">© 2025 Ray大帥哥 | Powered by GitHub Pages</div>
   </footer>
 </body>
 </html>
