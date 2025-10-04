@@ -1,15 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>test1</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我的 HTML 作業集 - Main Page</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-  
 <body>
-<main class="card">
-<h1>今天9/14早睡哥生日</h1>
-<img src="Sleep.jpg" alt="Sleep pic">
-</main>
+  <header class="site-header">
+    <div class="container">
+      <h1>我的 HTML 作業集</h1>
+      <p class="subtitle">按一週一個按鈕，打開那週的作業頁面</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+      <!-- Week 3 的作業連結 -->
+      <a class="week-card" href="Week%203-Vegetables%20page/index.html" target="_blank" rel="noopener">
+        <div class="week-number">Week 3</div>
+        <div class="week-title">Vegetables page</div>
+      </a>
+
+      <!-- 若要新增更多週，複製上方 <a class="week-card"> 標籤並修改內容 -->
+    </section>
+
+    <section class="notes">
+      <h2>提示</h2>
+      <ul>
+        <li>資料夾名稱若包含空格，連結中空格需以 <code>%20</code> 編碼。</li>
+        <li>建議改為不含空格的命名（例如 <code>week3-vegetables</code>）。</li>
+        <li>每個資料夾內都要有 <code>index.html</code>，GitHub Pages 才能正確顯示。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">Built for GitHub Pages • Put your files in the repo root</div>
+  </footer>
 </body>
 </html>
