@@ -31,22 +31,46 @@ header .logo {
   color: #778A50;
 }
 
-header .top-buttons a {
-  margin-left: 10px;
-  text-decoration: none;
-  color: #778A50;
-  background: #F7FBDA;
-  padding: 5px 10px;
-  border-radius: 3px;
-  font-size: 14px;
-  display: inline-block;
+
+header .top-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
 }
 
-/* 純圖片按鈕樣式 */
-header .top-buttons a:has(img) {
+
+header .top-buttons a {
+  text-decoration: none;
+  color: #778A50;
+  background: #EDF2C5;
+  padding: 4px 8px; 
+  border-radius: 3px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+}
+
+/* 按鈕（LOGIN / JOIN） */
+header .top-buttons a.text-btn {
+  border: #778A50 solid 1px;
+  padding: 6px 12px; 
+  border-radius: 3px;
+  background: #EDF2C5; 
+  height: auto; 
+  line-height: 1; 
+}
+
+/* 圖片按鈕(FB/IG) */
+header .top-buttons a.icon-btn {
   background: none;
   padding: 0;
   border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
 }
 
 header .top-buttons a img {
@@ -173,7 +197,7 @@ main {
 footer {
   background: #778A50;
   text-align: center;
-  color: white;
+  color: #EDF2C5;
   padding: 15px;
   margin-top: 20px;
   width: 100%;
