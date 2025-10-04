@@ -82,9 +82,12 @@ header .top-buttons a img {
 /* 分隔符號 */
 header .top-buttons .separator {
   color: #778A50;
-  margin: 0 10px;
-  font-size: 16px;
+  font-size: 18px; 
+  font-weight: 600;
   vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
 }
 
 /* Nav */
