@@ -1,0 +1,123 @@
+/* ===== Google Fonts: Noto Sans TC (更適合中文的字體) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+/* ===== 全站基礎設定 (Global Styles) ===== */
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f8f9fa; /* 淡灰色背景，讓白色區塊更突出 */
+}
+
+/* ===== 導覽列微調 (Navbar Customization) ===== */
+.navbar-brand img {
+    height: 40px; /* 確保 Logo 高度一致 */
+}
+
+.navbar-brand span {
+    font-weight: 700;
+    color: #343a40;
+}
+
+/* 使用者選單中的頭像圖示 */
+.dropdown-toggle .bi-person-circle {
+    transition: color 0.2s ease-in-out;
+}
+
+.dropdown-toggle:hover .bi-person-circle {
+    color: var(--bs-primary); /* 滑鼠懸停時圖示變色 */
+}
+
+/* ===== 課程卡片樣式 (Course Card Styles) ===== */
+.card {
+    border: none; /* 移除卡片的邊框，更簡潔 */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* 卡片滑鼠懸停效果 */
+.card:hover {
+    transform: translateY(-5px); /* 輕微向上浮動 */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important; /* 增加陰影 */
+}
+
+.card-title {
+    font-weight: 700;
+    color: #212529;
+}
+
+.card-footer {
+    background-color: #ffffff; /* 確保卡片底部為白色 */
+    border-top: none; /* 移除頂部邊線 */
+}
+
+/* ===== 頁尾樣式 (Footer Styles) ===== */
+footer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* ===== 主題切換：深色模式 (Dark Mode) ===== */
+:root {
+    --bg-default: #f8f9fa;
+    --surface-default: #ffffff;
+    --text-default: #212529;
+    --muted-default: #6c757d;
+}
+
+body.dark-mode {
+    --bg-default: #0f1720;
+    --surface-default: #111827;
+    --text-default: #e6eef6;
+    --muted-default: #9aa6b2;
+    background-color: var(--bg-default);
+    color: var(--text-default);
+}
+
+/* 元件深色覆寫 */
+body.dark-mode .navbar,
+body.dark-mode .card,
+body.dark-mode footer,
+body.dark-mode .list-group-item,
+body.dark-mode .breadcrumb,
+body.dark-mode .card-header,
+body.dark-mode .card-footer {
+    background-color: var(--surface-default) !important;
+    color: var(--text-default) !important;
+}
+
+body.dark-mode .card {
+    box-shadow: 0 0.5rem 1.25rem rgba(2,6,23,0.6) !important;
+}
+
+body.dark-mode a,
+body.dark-mode .nav-link {
+    color: #9ec5ff !important;
+}
+
+body.dark-mode .text-muted {
+    color: var(--muted-default) !important;
+}
+
+/* 主題 icon 的樣式 */
+.theme-icon-active {
+    color: #ffc107; /* 高亮顯示的顏色，可依需求調整 */
+    filter: drop-shadow(0 0 6px rgba(255,193,7,0.12));
+}
+
+/* 微調 sun/moon 預設顏色 */
+#theme-icon-moon { color: #6c757d; }
+#theme-icon-sun { color: #f6c84c; }
+
+/* 在深色模式時，讓 icon 顏色更突出 */
+body.dark-mode #theme-icon-moon { color: #cbd5e1; }
+body.dark-mode #theme-icon-sun { color: #ffd54a; }
+
+/* 特定文字覆寫：
+   - 首頁歡迎語（hero-section h1）：在深色模式下設為黑色（使用者要求）
+   - 課程標題（display-5.fw-bold）：在深色模式下設為白色
+*/
+body.dark-mode .hero-section h1 {
+    color: #000000 !important; /* 使用者指定深色模式下為黑色 */
+}
+
+body.dark-mode .display-5.fw-bold {
+    color: #ffffff !important; /* 課程名稱在深色模式下為白色 */
+}
