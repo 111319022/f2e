@@ -1,0 +1,162 @@
+/* ===== Google Fonts: Noto Sans TC ===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+/* ===== 全網站基礎設定 ===== */
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f8f9fa; 
+}
+
+/* ===== Nav Bar ===== */
+.navbar-brand img {
+    height: 40px; /* 讓 Logo 高度一致 */
+}
+
+.navbar-brand span {
+    font-weight: 700;
+    color: #343a40;
+}
+
+/* 使用者選單中的頭像圖示 */
+.dropdown-toggle .bi-person-circle {
+    transition: color 0.2s ease-in-out;
+}
+
+.dropdown-toggle:hover .bi-person-circle {
+    color: var(--bs-primary); /* 滑鼠懸停時圖示變色 */
+}
+
+/* ===== 課程卡片樣式  ===== */
+.card {
+    border: none; /* 移除卡片的邊框，更簡潔 */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* 卡片滑鼠懸停效果 */
+.card:hover {
+    transform: translateY(-5px); /* 輕微向上浮動 */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important; /* 增加陰影 */
+}
+
+.card-title {
+    font-weight: 700;
+    color: #212529;
+}
+
+.card-footer {
+    background-color: #ffffff; /* 確保卡片底部為白色 */
+    border-top: none; /* 移除頂部邊線 */
+}
+
+/* ===== Footer  ===== */
+footer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* ===== Dark Mode ===== */
+:root {
+    --bg-default: #f8f9fa;
+    --surface-default: #ffffff;
+    --text-default: #212529;
+    --muted-default: #6c757d;
+}
+
+body.dark-mode {
+    --bg-default: #0f1720;
+    --surface-default: #111827;
+    --text-default: #e6eef6;
+    --muted-default: #9aa6b2;
+    background-color: var(--bg-default);
+    color: var(--text-default);
+}
+
+/* 元件深色覆寫 */
+body.dark-mode .navbar,
+body.dark-mode .card,
+body.dark-mode footer,
+body.dark-mode .list-group-item,
+body.dark-mode .breadcrumb,
+body.dark-mode .card-header,
+body.dark-mode .card-footer {
+    background-color: var(--surface-default) !important;
+    color: var(--text-default) !important;
+}
+
+body.dark-mode .card {
+    box-shadow: 0 0.5rem 1.25rem rgba(2,6,23,0.6) !important;
+}
+
+body.dark-mode a,
+body.dark-mode .nav-link {
+    color: #9ec5ff !important;
+}
+
+body.dark-mode .text-muted {
+    color: var(--muted-default) !important;
+}
+
+/* 主題 icon 的樣式 */
+.theme-icon-active {
+    color: #ffc107; /* 高亮顯示的顏色，可依需求調整 */
+    filter: drop-shadow(0 0 6px rgba(255,193,7,0.12));
+}
+
+/* 微調 sun/moon 預設顏色 */
+#theme-icon-moon { color: #6c757d; }
+#theme-icon-sun { color: #f6c84c; }
+
+/* 在深色模式時，讓 icon 顏色更突出 */
+body.dark-mode #theme-icon-moon { color: #cbd5e1; }
+body.dark-mode #theme-icon-sun { color: #ffd54a; }
+
+/* 特定文字指定顏色：*/
+/* - 首頁歡迎語（hero-section h1）：在深色模式下設為黑色*/
+
+body.dark-mode .hero-section h1 {
+    color: #000000 !important; 
+}
+/* - 課程標題（display-5.fw-bold）：在深色模式下設為白色 */
+body.dark-mode .display-5.fw-bold {
+    color: #ffffff !important; 
+}
+/* - NavBar Noodle教學平台：在深色模式下設為白色*/
+
+/* NavBar 品牌文字在深色模式下為白色以提升對比 */
+body.dark-mode .navbar-brand span {
+    color: #ffffff !important;
+}
+
+/* ===== 回到頂部按鈕 ===== */
+#back-to-top-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1.25rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #343a40;
+    color: #ffffff;
+    border-radius: 50%;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+#back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 在深色模式下用淺色按鈕 */
+body.dark-mode #back-to-top-btn {
+    background: #e6eef6; 
+    color: #0f1720;
+}
