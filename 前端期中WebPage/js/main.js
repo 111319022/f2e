@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 使用 'DOMContentLoaded' 事件確保在操作 DOM 前，頁面已完全載入
 
 
-    // ===== 功能 1: 滾動至頂部按鈕 (Back to Top Button) =====
+    // ===== 功能 1: Back to Top Button =====
   
     const backToTopBtn = document.getElementById('back-to-top-btn');
 
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ===== 功能 2: 深色/淺色模式切換 (Dark/Light Mode) =====
+    // ===== 功能 2: 深色模式 (Dark Mode) =====
     const themeSwitch = document.getElementById('theme-switch');
     const themeIconSun = document.getElementById('theme-icon-sun');
     const themeIconMoon = document.getElementById('theme-icon-moon');

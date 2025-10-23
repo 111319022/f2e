@@ -18,7 +18,7 @@
 /* 當檔案被拖曳到區域上方的樣式 */
 .file-upload-zone.drag-over {
     background-color: #e9ecef;
-    border-color: #0d6efd !important; /* Bootstrap 主要藍色 */
+    border-color: #0d6efd !important; 
 }
 
 /* --- 檔案列表樣式 --- */
