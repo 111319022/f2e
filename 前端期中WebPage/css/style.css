@@ -93,7 +93,7 @@ body.dark-mode {
 .dark-mode .navbar .nav-item,
 .dark-mode .card-title,
 .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h5, .dark-mode h6 {
-    /* 導覽列文字在深色模式使用純白以提高對比 */
+    /* 導覽列文字會在深色模式使用「白色」 */
     color: #ffffff !important;
 }
 .dark-mode .card,
@@ -165,4 +165,22 @@ body.dark-mode {
 .dark-mode .card .card-body,
 .dark-mode .card .card-footer {
     color: var(--text-color) !important;
+}
+
+/* 深色模式：使用者下拉選單（右上） */
+.dark-mode .dropdown-menu {
+    background-color: #111214 !important;
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+}
+.dark-mode .dropdown-menu .dropdown-item {
+    color: var(--text-color) !important;
+}
+.dark-mode .dropdown-menu .dropdown-item:hover,
+.dark-mode .dropdown-menu .dropdown-item:focus {
+    background-color: rgba(255,255,255,0.03) !important;
+    color: var(--text-color) !important;
+}
+.dark-mode .dropdown-divider {
+    border-top: 1px solid rgba(255,255,255,0.06) !important;
 }
