@@ -10,6 +10,14 @@ body {
 }
 
 /* ===== Nav Bar ===== */
+.navbar.sticky-top {
+    z-index: 1040; /* 確保導覽列在最上層，高於其他 sticky 元素 */
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
 .navbar-brand img {
     height: 40px;
 }
