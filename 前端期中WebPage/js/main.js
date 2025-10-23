@@ -1,12 +1,13 @@
-// 使用 'DOMContentLoaded' 事件確保在操作 DOM 前，頁面已完全載入
 document.addEventListener('DOMContentLoaded', () => {
+    // 使用 'DOMContentLoaded' 事件確保在操作 DOM 前，頁面已完全載入
+
 
     // ===== 功能 1: 滾動至頂部按鈕 (Back to Top Button) =====
   
     const backToTopBtn = document.getElementById('back-to-top-btn');
 
     if (backToTopBtn) {
-        // 使用 addEventListener 而非覆寫 window.onscroll，避免覆蓋其他 listener
+        
         window.addEventListener('scroll', () => {
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 backToTopBtn.classList.add('show');
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentTheme = localStorage.getItem('theme') || 'light';
     applyTheme(currentTheme);
 
-    // 如果切換器存在，再綁定事件
+    // 如果深色模式切換器存在，再綁定事件
     if (themeSwitch) {
         themeSwitch.addEventListener('change', () => {
             let theme = themeSwitch.checked ? 'dark' : 'light';

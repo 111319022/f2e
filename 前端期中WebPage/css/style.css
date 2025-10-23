@@ -23,12 +23,12 @@ body {
 }
 
 .dropdown-toggle:hover .bi-person-circle {
-    color: var(--bs-primary); /* 滑鼠懸停時圖示變色 */
+    color: var(--bs-primary); /* 滑鼠懸停時 圖示變色 */
 }
 
 /* ===== 課程卡片樣式  ===== */
 .card {
-    border: none; /* 移除卡片的邊框，更簡潔 */
+    border: none; 
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
@@ -44,7 +44,7 @@ body {
 }
 
 .card-footer {
-    background-color: #ffffff; /* 確保卡片底部為白色 */
+    background-color: #ffffff; /* 卡片底部為白色 */
     border-top: none; /* 移除頂部邊線 */
 }
 
@@ -110,7 +110,7 @@ body.dark-mode .text-muted {
 body.dark-mode #theme-icon-moon { color: #cbd5e1; }
 body.dark-mode #theme-icon-sun { color: #ffd54a; }
 
-/* 特定文字指定顏色：*/
+/* !!!!!特定文字指定顏色!!!!!*/
 /* - 首頁歡迎語（hero-section h1）：在深色模式下設為黑色*/
 
 body.dark-mode .hero-section h1 {

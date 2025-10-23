@@ -1,21 +1,19 @@
-/* ===== course.css (課程頁面專用樣式) ===== */
-
-/* --- 課程標頭 --- */
+/* --- 課程title --- */
 .assignment-header h1 {
     color: #343a40; /* 標題顏色加深 */
 }
 
-/* --- 手風琴 (Accordion) 樣式微調 --- */
+/* --- 手風琴 --- */
 .accordion-button {
     font-size: 1.1rem;
     font-weight: 500;
     transition: background-color 0.2s ease-in-out;
 }
 
-/* 當手風琴按鈕不是收合狀態時 (即展開時) 的樣式 */
+/* 手風琴按鈕 展開時樣式 */
 .accordion-button:not(.collapsed) {
     color: #ffffff;
-    background-color: var(--bs-primary); /* 使用 Bootstrap 的主要顏色 */
+    background-color: var(--bs-primary); 
 }
 
 .accordion-button:not(.collapsed)::after {
@@ -28,12 +26,12 @@
 }
 
 .accordion-button:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* 點擊時的外框光暈 */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* 點下時的外框光暈 */
 }
 
-/* --- 手風琴內容中的列表 --- */
+/* --- 手風琴內容 （列表） --- */
 .accordion-body .list-group-item {
-    border: none; /* 移除列表項目的邊線，更乾淨 */
+    border: none; 
     padding-left: 0;
     padding-right: 0;
 }
@@ -49,7 +47,7 @@
 }
 
 
-/* --- 右側邊欄卡片 --- */
+/* --- 右側邊欄 資訊卡片們 --- */
 .card.sticky-top {
     border-radius: .5rem;
     border: 1px solid #dee2e6;
