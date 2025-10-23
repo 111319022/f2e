@@ -1,6 +1,6 @@
 /* --- 課程title --- */
 .assignment-header h1 {
-    color: #343a40; /* 標題顏色加深 */
+    color: #343a40; 
 }
 
 /* --- 手風琴 --- */
@@ -56,4 +56,36 @@
 .card.sticky-top .card-header {
     font-weight: 700;
     background-color: #f8f9fa;
+}
+
+/* 深色模式：course 頁面側欄與手風琴覆寫 */
+.dark-mode .card.sticky-top {
+    background-color: var(--surface-color) !important;
+    border-color: var(--border-color) !important;
+}
+.dark-mode .card.sticky-top .card-header {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+}
+.dark-mode .accordion-body .list-group-item a {
+    color: var(--text-color) !important;
+}
+
+/* 強制覆寫手風琴展開內容與按鈕，在深色模式下不要顯示白色背景 */
+.dark-mode .accordion .accordion-body,
+.dark-mode .accordion .accordion-item,
+.dark-mode .accordion .accordion-collapse,
+.dark-mode .accordion .accordion-body .list-group-item {
+    background-color: var(--surface-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* 未展開（.collapsed）與展開按鈕皆為白色文字，箭頭也強制為白色 */
+.dark-mode .accordion-button,
+.dark-mode .accordion-button.collapsed {
+    color: #ffffff !important;
+}
+.dark-mode .accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }

@@ -41,6 +41,32 @@
     border-color: #495057;
 }
 
+/* 深色模式：檔案上傳區域（拖曳區）與顯示文字 */
+.dark-mode .file-upload-zone {
+    background-color: rgba(255,255,255,0.02) !important;
+    border-color: rgba(255,255,255,0.08) !important;
+    color: var(--text-color) !important;
+}
+
+.dark-mode .file-upload-zone:hover {
+    background-color: rgba(255,255,255,0.03) !important;
+}
+
+/* 繳交狀態（badge）在深色模式下提高對比 */
+.dark-mode .badge.bg-danger {
+    background-color: #ff6b6b !important; /* 更鮮豔的 danger 色 */
+    color: #ffffff !important; /* 深色模式下紅色 badge 顯示白色文字（與淺色模式一致） */
+}
+.dark-mode .badge.bg-success {
+    background-color: #4ade80 !important;
+    color: #0f1720 !important;
+}
+
+/* 如果 badge 使用的是深色底（例如 bg-secondary），讓文字為白色以提高可讀性 */
+.dark-mode .badge {
+    color: #ffffff !important;
+}
+
 .file-name {
     flex-grow: 1;
     white-space: nowrap;
@@ -52,4 +78,78 @@
     margin-left: 1rem;
     padding: 0.25rem 0.5rem;
     font-size: 0.8rem;
+}
+
+/* 強制覆寫：確保上傳區內所有文字與按鈕在深色模式下可讀 */
+.dark-mode #file-upload-zone,
+.dark-mode #file-upload-zone * {
+    color: var(--text-color) !important;
+}
+
+/* 覆寫 .text-primary 在上傳區造成顏色不足的情況 */
+.dark-mode #file-upload-zone .text-primary {
+    color: #9ec5ff !important; /* 更亮的藍色 */
+}
+
+/* 按鈕外觀在深色模式下更明顯 */
+.dark-mode #file-upload-zone .btn-secondary {
+    background-color: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.08) !important;
+    color: var(--text-color) !important;
+}
+
+/* 檔案列表項在深色模式下提高對比 */
+.dark-mode .file-item {
+    background-color: rgba(255,255,255,0.02) !important;
+    border-color: rgba(255,255,255,0.06) !important;
+    color: var(--text-color) !important;
+}
+
+/* 針對右側繳交狀態卡片內的 list-group 文字強制為高對比白色 */
+.dark-mode .card .list-group-item,
+.dark-mode .card .list-group-item span,
+.dark-mode .card .list-group-item div,
+.dark-mode .card .card-header,
+.dark-mode .card .card-footer {
+    color: var(--text-color) !important;
+    background-color: transparent !important;
+}
+
+    /* 強制：右側 sticky 卡片內的 danger badge 與 secondary badge 在深色模式保持可見且與淺色模式一致 */
+    .dark-mode .card.sticky-top .list-group-item .badge.bg-danger,
+    .dark-mode .card.sticky-top .badge.bg-danger {
+        background-color: #ff6b6b !important; /* 明亮的 danger */
+        color: #ffffff !important;
+    }
+    .dark-mode .card.sticky-top .list-group-item .badge.bg-secondary,
+    .dark-mode .card.sticky-top .badge.bg-secondary {
+        background-color: #6c757d !important;
+        color: #ffffff !important;
+    }
+
+    /* 更強制性的選取器：若上面仍被覆蓋，這個規則會勝出 */
+    body.dark-mode aside.col-lg-4 .card.sticky-top ul.list-group li .badge.bg-danger,
+    body.dark-mode aside .card.sticky-top .list-group-item .badge.bg-danger,
+    body.dark-mode .badge.bg-danger {
+        background-color: #ff6b6b !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        background-image: none !important;
+    }
+
+    /* 使用 Bootstrap 預設的 danger 顏色（或變數）以達到與淺色模式一致的外觀 */
+    body.dark-mode .badge.bg-danger {
+        background-color: var(--bs-danger, #dc3545) !important;
+        color: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
+    }
+
+/* 對特定 label 文字（例如 則繳交狀態 / 評分狀態 / 截止日期 / 剩餘時間）提高權重 */
+.dark-mode .card .list-group-item > span,
+.dark-mode .card .list-group-item > div,
+.dark-mode .card .list-group-item .text-danger,
+.dark-mode .card .list-group-item .fw-bold {
+    color: var(--text-color) !important;
 }
