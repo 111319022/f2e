@@ -1,4 +1,4 @@
-/* ===== Google Fonts: Noto Sans TC ===== */
+/* ===== 字體：Google Fonts Noto Sans TC ===== */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
 /* ===== 全網站基礎設定 ===== */
@@ -122,7 +122,7 @@ body.dark-mode {
     color: #0f1720;
 }
 
-/* 首頁 hero h1 深色模式顯示為黑色（依使用者要求） */
+/* 首頁 Noodle 字樣(hero h1) 深色模式顯示為黑色 */
 .dark-mode .hero-section h1 {
     color: #000000 !important;
 }
@@ -175,7 +175,7 @@ body.dark-mode {
     color: var(--text-color) !important;
 }
 
-/* 深色模式：使用者下拉選單（右上） */
+/* 深色模式：Dropdown Menu */
 .dark-mode .dropdown-menu {
     background-color: #111214 !important;
     color: var(--text-color) !important;
@@ -192,3 +192,34 @@ body.dark-mode {
 .dark-mode .dropdown-divider {
     border-top: 1px solid rgba(255,255,255,0.06) !important;
 }
+
+/* ===== 原index.css 內容合併 ===== */
+/* hero section */
+.hero-section {
+    background-color: #e9ecef; 
+    padding: 4rem 2rem;
+    margin-bottom: 3rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-weight: 700;
+}
+
+/* 課程圖片比例 */
+#my-courses .card-img-top {
+    height: 180px; 
+    object-fit: cover;
+}
+
+/* 深色模式 index-specific 覆寫 */
+.dark-mode .h3,
+.dark-mode #my-courses .h3 {
+    color: #ffffff !important;
+}
+
+.dark-mode .card-title {
+    color: #ffffff !important;
+}
+
