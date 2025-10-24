@@ -5,6 +5,7 @@
   --muted: #6b7280;
   --btn-view: #2b6cb0;
   --btn-code: #6b7280;
+  --btn-ppt: #166534;
 }
 
 * {
@@ -43,7 +44,7 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 22px;
   margin-top: 22px;
 }
@@ -81,6 +82,7 @@ body {
 .buttons {
   margin-top: 10px;
   display: flex;
+  flex-wrap: wrap; /* 增加換行彈性 */
   gap: 10px;
 }
 
@@ -109,6 +111,14 @@ body {
 
 .btn.code:hover {
   background: #4b5563;
+}
+
+
+.btn.ppt {
+  background: var(--btn-ppt); 
+
+.btn.ppt:hover {
+  background: #14532d; /* 滑鼠移上去時的深色 */
 }
 
 .site-footer {
