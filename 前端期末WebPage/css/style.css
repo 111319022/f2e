@@ -1,0 +1,225 @@
+/* ===== 字體：Google Fonts Noto Sans TC ===== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+/* ===== 全網站基礎設定 ===== */
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-color, #f8f9fa); 
+    color: var(--text-color, #212529);
+    transition: background-color 0.3s ease, color 0.3s ease; /* 平滑切換效果 */
+}
+
+/* ===== Nav Bar ===== */
+.navbar.sticky-top {
+    z-index: 1040; /* 確保導覽列在最上層，高於其他 sticky 元素 */
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+.navbar-brand span {
+    font-weight: 700;
+}
+.dropdown-toggle .bi-person-circle {
+    transition: color 0.2s ease-in-out;
+}
+.dropdown-toggle:hover .bi-person-circle {
+    color: var(--bs-primary);
+}
+
+/* ===== 課程卡片樣式 ===== */
+.card {
+    border: none;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-color: var(--surface-color, #ffffff); /* 使用 CSS 變數 */
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+.card-title {
+    font-weight: 700;
+}
+.card-footer {
+    background-color: transparent; /* 直接繼承 card 的背景色 */
+    border-top: none;
+}
+
+/* ===== Footer ===== */
+footer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* ===== 回到頂部按鈕 ===== */
+#back-to-top-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1.25rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    background: #343a40;
+    color: #ffffff;
+}
+#back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ===== 深色模式 (Dark Mode) ===== */
+body.dark-mode {
+    --bg-color: #0f1720;        /* 深色背景 */
+    --surface-color: #1e1e1e;   /* 深色卡片/表面 */
+    --text-color: #e6eef6;      /* 深色文字 */
+    --muted-color: #9aa6b2;     /* 深色輔助文字 */
+    --border-color: rgba(255, 255, 255, 0.1); /* 深色邊框 */
+}
+
+/* --- 深色模式下的通用元件覆寫 --- */
+.dark-mode .bg-light,
+.dark-mode .navbar {
+    background-color: var(--surface-color) !important;
+}
+.dark-mode .navbar-brand span,
+.dark-mode .navbar .nav-link,
+.dark-mode .navbar .nav-item,
+.dark-mode .card-title,
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h5, .dark-mode h6 {
+    /* 導覽列文字會在深色模式使用「白色」 */
+    color: #ffffff !important;
+}
+.dark-mode .card,
+.dark-mode .list-group-item,
+.dark-mode .modal-content,
+.dark-mode .accordion-item {
+    border-color: var(--border-color);
+}
+.dark-mode .list-group-item {
+    background-color: var(--surface-color);
+    color: var(--text-color); 
+}
+.dark-mode .text-muted {
+    color: var(--muted-color) !important;
+}
+.dark-mode #back-to-top-btn {
+    background: #e6eef6;
+    color: #0f1720;
+}
+
+/* 首頁 Noodle 字樣(hero h1) 深色模式顯示為黑色 */
+.dark-mode .hero-section h1 {
+    color: #000000 !important;
+}
+
+/* 若仍有元素被其他樣式覆蓋，強制 navbar link 的子元素（如 span/i）也為白 */
+.dark-mode .navbar .nav-link span,
+.dark-mode .navbar .nav-link i,
+.dark-mode .navbar-brand span {
+    color: #ffffff !important;
+}
+
+/* --- 深色模式：手風琴樣式 --- */
+.dark-mode .accordion-button {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+.dark-mode .accordion-button:not(.collapsed) {
+    background-color: var(--bs-primary); /* 展開時維持藍色 */
+    color: #ffffff;
+}
+/* 修正：讓手風琴的箭頭圖示在深色模式下，不論展開或收合都是白色的 */
+.dark-mode .accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* --- 主題切換圖示 --- */
+.theme-icon-active {
+    color: var(--bs-primary);
+}
+
+/* ===== 額外深色模式覆寫（補強可視性） ===== */
+/* breadcrumb 與連結提高對比 */
+.dark-mode .breadcrumb a,
+.dark-mode .breadcrumb-item a,
+.dark-mode .breadcrumb-item {
+    color: #9ec5ff !important; /* 較亮的藍色，易於辨識 */
+}
+
+.dark-mode .bg-white {
+    background-color: var(--surface-color) !important; /* 避免白底在深色主題 */
+}
+
+.dark-mode a {
+    color: #9ec5ff !important;
+}
+
+/* 調整卡片內部連結與文字顏色，增加可讀性 */
+.dark-mode .card .card-body,
+.dark-mode .card .card-footer {
+    color: var(--text-color) !important;
+}
+
+/* 深色模式：Dropdown Menu */
+.dark-mode .dropdown-menu {
+    background-color: #111214 !important;
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+}
+.dark-mode .dropdown-menu .dropdown-item {
+    color: var(--text-color) !important;
+}
+.dark-mode .dropdown-menu .dropdown-item:hover,
+.dark-mode .dropdown-menu .dropdown-item:focus {
+    background-color: rgba(255,255,255,0.03) !important;
+    color: var(--text-color) !important;
+}
+.dark-mode .dropdown-divider {
+    border-top: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* ===== 原index.css 內容合併 ===== */
+/* hero section */
+.hero-section {
+    background-color: #e9ecef; 
+    padding: 4rem 2rem;
+    margin-bottom: 3rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-weight: 700;
+}
+
+/* 課程圖片比例 */
+#my-courses .card-img-top {
+    height: 180px; 
+    object-fit: cover;
+}
+
+/* 深色模式 index-specific 覆寫 */
+.dark-mode .h3,
+.dark-mode #my-courses .h3 {
+    color: #ffffff !important;
+}
+
+.dark-mode .card-title {
+    color: #ffffff !important;
+}
+

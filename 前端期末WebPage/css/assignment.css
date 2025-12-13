@@ -1,0 +1,59 @@
+/* --- 檔案上傳區塊 --- */
+.file-upload-zone {
+    position: relative;
+    border-style: dashed !important;
+    border-color: #ced4da;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+.file-upload-zone:hover {
+    background-color: #e9ecef;
+}
+
+/* 當檔案被拖曳到區域上方的樣式 */
+.file-upload-zone.drag-over {
+    background-color: #e9ecef;
+    border-color: #0d6efd !important;
+}
+
+/* 深色模式：檔案上傳區 */
+.dark-mode .file-upload-zone {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.dark-mode .file-upload-zone:hover,
+.dark-mode .file-upload-zone.drag-over {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* --- 檔案列表樣式 --- */
+#file-list-display {
+    text-align: left;
+}
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+.file-name {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.remove-file-btn {
+    margin-left: 1rem;
+    padding: 0.25rem 0.5rem;
+
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-color);
+}
+
+
+/* ===== 核心修正 ===== */
+/* 深色模式下，強制 bg-danger badge 使用 Bootstrap 的 danger 變數 */
+.dark-mode .badge.bg-danger {
+    background-color: var(--bs-danger) !important;
+}
