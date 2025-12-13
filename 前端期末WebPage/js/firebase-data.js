@@ -1,18 +1,6 @@
 // js/firebase-data.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-// 使用跟 auth 一樣的 config
-const firebaseConfig = {
-    // ... 貼上你原本的 config ...
-    apiKey: "你的API_KEY", 
-    // ...
-    projectId: "ntue-moodle-resedign", // 確保這個對
-    // ...
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app); // 初始化 Firestore
+import { collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { db } from "./firebase-config.js"; // 共用 config 初始化的 db
 
 document.addEventListener('DOMContentLoaded', () => {
     const listContainer = document.getElementById('announcement-list');
