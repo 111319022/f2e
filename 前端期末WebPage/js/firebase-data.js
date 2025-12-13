@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('modal-date').textContent = data.date;
                     
                     // 填入內容 (如果資料庫裡沒有 content 欄位，就顯示預設文字)
-                    const content = data.content ? data.content : "目前此公告沒有詳細內容 (請在 Firebase 新增 content 欄位測試)";
+                    const content = data.content ? data.content : "目前此公告沒有詳細內容 ";
                     document.getElementById('modal-content').textContent = content;
 
                     // 填入標籤樣式
