@@ -1,22 +1,8 @@
 // js/firebase-auth.js
 
 // 1. 引入 Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
-// 2. Firebase 設定 
-const firebaseConfig = {
-  apiKey: "AIzaSyA6odCZUzRQVwlMv4Pnu55qGKwEFv2fzeo",
-  authDomain: "ntue-moodle-resedign.firebaseapp.com",
-  projectId: "ntue-moodle-resedign",
-  storageBucket: "ntue-moodle-resedign.firebasestorage.app",
-  messagingSenderId: "853184852200",
-  appId: "1:853184852200:web:1c1a78e7a20c1c3afa595d",
-  measurementId: "G-G0M5D0JNZG"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { auth } from "./firebase-config.js"; // 共用 config 初始化的 auth
 const provider = new GoogleAuthProvider();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -52,13 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 如果在登入頁，綁定登入按鈕事件
+// 如果在登入頁，綁定登入按鈕事件
             const loginBtn = document.getElementById('google-login-btn');
             if (loginBtn) {
                 loginBtn.onclick = () => {
-                    signInWithPopup(auth, provider).then(() => {
-                        // 登入成功後，onAuthStateChanged 會再次觸發，上面的邏輯會自動把他踢去 dashboard
-                        console.log("登入成功，準備跳轉...");
-                    }).catch((error) => console.error(error));
+                    console.log("嘗試登入中..."); // 讓你知道按鈕有反應
+                    signInWithPopup(auth, provider)
+                        .then((result) => {
+                            console.log("登入成功，準備跳轉...");
+                        })
+                        .catch((error) => {
+                            // 🔥 關鍵修改：直接彈出視窗告訴你錯在哪裡
+                            console.error("詳細錯誤:", error);
+                            alert(`登入失敗！\n\n錯誤代碼: ${error.code}\n錯誤訊息: ${error.message}`);
+                        });
                 };
             }
         }
