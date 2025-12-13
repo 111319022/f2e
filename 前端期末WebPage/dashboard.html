@@ -139,23 +139,14 @@
         </section>
 
         <section id="announcements" class="mt-5">
-            <h2 class="h3 mb-3">網站公告</h2>
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6 class="mb-1">登入Noodle平台說明</h6>
-                        <small class="text-muted">由 17777770 早睡哥 發表於 2025年 10月 22日</small>
-                    </div>
-                    <span class="badge bg-primary rounded-pill">重要</span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                     <div>
-                        <h6 class="mb-1">尊重及保護智慧財產權</h6>
-                        <small class="text-muted">由 超級宇宙無敵霹靂大帥哥 發表於 2024年 12月 23日</small>
-                    </div>
-                </a>
-            </div>
-        </section>
+    <h2 class="h3 mb-3">網站公告</h2>
+    <div id="announcement-list" class="list-group">
+        <div class="text-center text-muted py-3">
+            <div class="spinner-border spinner-border-sm" role="status"></div>
+            載入中...
+        </div>
+    </div>
+</section>
 
     </main>
 
@@ -182,5 +173,6 @@
    <script type="module" src="js/firebase-auth.js"></script>
 
    <script src="js/main.js"></script>
+   <script type="module" src="js/firebase-data.js"></script>
 </body>
 </html>
