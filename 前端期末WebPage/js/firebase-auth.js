@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 更新 Navbar UI (原本的邏輯)
             updateNavbarUI(user);
+            
+            // 更新首頁歡迎訊息
+            updateWelcomeMessage(user);
 
         } else {
             // === [情境 B: 使用者未登入] ===
@@ -100,5 +103,13 @@ function updateNavbarUI(user) {
                 alert("已登出！");
             });
         });
+    }
+}
+
+// 更新首頁歡迎訊息
+function updateWelcomeMessage(user) {
+    const welcomeMsg = document.getElementById('welcome-message');
+    if (welcomeMsg && user.displayName) {
+        welcomeMsg.textContent = `歡迎回來, ${user.displayName}`;
     }
 }
