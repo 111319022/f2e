@@ -2,7 +2,8 @@
 
 // 1. 引入 Firebase
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { auth } from "./firebase-config.js"; // 共用 config 初始化的 auth
+import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { auth, db } from "./firebase-config.js"; // 共用 config 初始化的 auth
 const provider = new GoogleAuthProvider();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (user) {
             // === [情境 A: 使用者已登入] ===
             console.log("使用者已登入:", user.displayName);
+
+            ensureUserProfile(user).catch((err) => console.error("同步使用者資料失敗", err));
 
             // 如果使用者還在登入頁 (index.html)，把他踢去儀表板 (dashboard.html)
             if (isLoginPage) {
@@ -111,5 +114,27 @@ function updateWelcomeMessage(user) {
     const welcomeMsg = document.getElementById('welcome-message');
     if (welcomeMsg && user.displayName) {
         welcomeMsg.textContent = `歡迎回來, ${user.displayName}`;
+    }
+}
+
+async function ensureUserProfile(user) {
+    if (!user) return;
+
+    const userRef = doc(db, "users-1141_0178", user.uid);
+    const snap = await getDoc(userRef);
+
+    const baseData = {
+        name: user.displayName || '未命名使用者',
+        email: user.email || '',
+        photoURL: user.photoURL || '',
+        role: 'student',
+        status: 'online',
+        updatedAt: serverTimestamp(),
+    };
+
+    if (!snap.exists()) {
+        await setDoc(userRef, { ...baseData, createdAt: serverTimestamp() });
+    } else {
+        await updateDoc(userRef, baseData);
     }
 }
