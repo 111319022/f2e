@@ -35,8 +35,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const currentUser = auth.currentUser;
+        const dataToRender = currentFilter === 'all'
+            ? (() => {
+                const teacher = filteredData.find(m => m.role === 'teacher');
+                const me = filteredData.find(m => currentUser && m.email === currentUser.email);
+                const rest = filteredData.filter(m => {
+                    const isTeacher = teacher && m.email === teacher.email;
+                    const isMe = me && m.email === me.email;
+                    return !isTeacher && !isMe;
+                });
 
-        filteredData.forEach(member => {
+                const restSorted = rest.slice().sort((a, b) => {
+                    const sa = a.status === 'online' ? 0 : 1;
+                    const sb = b.status === 'online' ? 0 : 1;
+                    if (sa !== sb) return sa - sb;
+                    const an = a.name || '';
+                    const bn = b.name || '';
+                    return an.localeCompare(bn);
+                });
+
+                const result = [];
+                if (teacher) result.push(teacher);
+                if (me && (!teacher || me.email !== teacher.email)) result.push(me);
+                return result.concat(restSorted);
+            })()
+            : (() => {
+                const me = filteredData.find(m => currentUser && m.email === currentUser.email);
+                const rest = filteredData.filter(m => !(me && m.email === me.email));
+
+                const restSorted = rest.slice().sort((a, b) => {
+                    const sa = a.status === 'online' ? 0 : 1;
+                    const sb = b.status === 'online' ? 0 : 1;
+                    if (sa !== sb) return sa - sb;
+                    const an = a.name || '';
+                    const bn = b.name || '';
+                    return an.localeCompare(bn);
+                });
+
+                const result = [];
+                if (me) result.push(me);
+                return result.concat(restSorted);
+            })();
+
+        dataToRender.forEach(member => {
             // 1. 判斷角色與狀態標籤
             let badgeHtml = '';
             if (member.role === 'teacher') {
