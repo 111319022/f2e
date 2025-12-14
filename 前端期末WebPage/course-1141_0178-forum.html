@@ -19,18 +19,15 @@
                 <img src="image/ntue_logo.png" alt="NTUE Logo" height="40">
                 <span class="ms-2 fw-bold">Noodle 教學平台</span>
             </a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="main-nav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="dashboard.html">首頁</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">儀表板</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">所有課程</a></li>
                 </ul>
-
                 <div class="d-flex align-items-center ms-lg-3 me-3">
                     <i class="bi bi-sun-fill theme-icon-active" id="theme-icon-sun"></i>
                     <div class="form-check form-switch mx-1">
@@ -38,7 +35,6 @@
                     </div>
                     <i class="bi bi-moon-fill" id="theme-icon-moon"></i>
                 </div>
-
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="user-menu" role="button" data-bs-toggle="dropdown">
@@ -59,7 +55,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.html">首頁</a></li>
-                <li class="breadcrumb-item"><a href="course.html">元宇宙概論</a></li>
+                <li class="breadcrumb-item"><a href="course.html">元宇宙禪修</a></li>
                 <li class="breadcrumb-item active">討論區</li>
             </ol>
         </nav>
@@ -68,47 +64,15 @@
             <div class="col-lg-8">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="display-6 fw-bold">課程討論區</h1>
-                    <button class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>發起新討論</button>
+                    <button id="btn-new-post" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>發起新討論</button>
                 </div>
 
                 <div class="card border" style="transform: none !important; transition: none !important; box-shadow: none !important;">
-                    <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action p-4">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 fw-bold text-primary">請問期末報告的格式？</h5>
-                                <small class="text-muted">3 小時前</small>
-                            </div>
-                            <p class="mb-2 text-secondary text-truncate">助教好，想請問期末報告是否需要包含 Persona 的詳細分析...</p>
-                            <div class="d-flex align-items-center mt-2">
-                                <small class="text-muted me-3"><i class="bi bi-person-fill me-1"></i>徐丞睿</small>
-                                <span class="badge bg-secondary rounded-pill">2 則回覆</span>
-                            </div>
-                        </a>
-
-                        <a href="#" class="list-group-item list-group-item-action p-4">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 fw-bold text-dark">Firebase 連線問題求救</h5>
-                                <small class="text-muted">昨天</small>
-                            </div>
-                            <p class="mb-2 text-secondary text-truncate">按照講義設定了，但一直出現 API Key 錯誤，有人遇過嗎？</p>
-                            <div class="d-flex align-items-center mt-2">
-                                <small class="text-muted me-3"><i class="bi bi-person-fill me-1"></i>陳同學</small>
-                                <span class="badge bg-success rounded-pill">已解決</span>
-                                <span class="badge bg-secondary rounded-pill ms-1">5 則回覆</span>
-                            </div>
-                        </a>
-                        
-                        <a href="#" class="list-group-item list-group-item-action p-4">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 fw-bold text-dark">關於下週停課的補課時間</h5>
-                                <small class="text-muted">2 天前</small>
-                            </div>
-                            <p class="mb-2 text-secondary text-truncate">老師上課有說要補課嗎？還是自行看影片？</p>
-                            <div class="d-flex align-items-center mt-2">
-                                <small class="text-muted me-3"><i class="bi bi-person-fill me-1"></i>林小美</small>
-                                <span class="badge bg-secondary rounded-pill">0 則回覆</span>
-                            </div>
-                        </a>
+                    <div id="forum-list" class="list-group list-group-flush">
+                        <div class="text-center py-5 text-muted">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                            載入討論串...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,5 +112,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="js/firebase-auth.js"></script>
     <script src="js/main.js"></script>
+    <script type="module" src="js/course-1141_0178-forum-page.js"></script>
 </body>
 </html>
