@@ -1,142 +1,100 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成員列表 | NTUE Noodle</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/course.css">
-    <link rel="icon" href="image/noodle-favicon.jpg" type="image/jpeg">
-    <link rel="shortcut icon" href="image/noodle-favicon.jpg" type="image/jpeg">
-</head>
-<body>
+import { collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { db, auth } from "./firebase-config.js";
 
-    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.html">
-                <img src="image/ntue_logo.png" alt="NTUE Logo" height="40">
-                <span class="ms-2 fw-bold">Noodle 教學平台</span>
-            </a>
+document.addEventListener('DOMContentLoaded', () => {
+    const listContainer = document.getElementById('member-list');
+    const tabs = document.querySelectorAll('#member-tabs .nav-link');
+    
+    if (!listContainer) return;
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    // 抓取資料
+    const q = query(collection(db, "users-1141_0178"), orderBy("role"));
 
-            <div class="collapse navbar-collapse" id="main-nav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="dashboard.html">首頁</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">儀表板</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">所有課程</a></li>
-                </ul>
+    let allMembers = [];
+    let currentFilter = 'all';
 
-                <div class="d-flex align-items-center ms-lg-3 me-3">
-                    <i class="bi bi-sun-fill theme-icon-active" id="theme-icon-sun"></i>
-                    <div class="form-check form-switch mx-1">
-                        <input class="form-check-input" type="checkbox" role="switch" id="theme-switch">
-                    </div>
-                    <i class="bi bi-moon-fill" id="theme-icon-moon"></i>
+    onSnapshot(q, (querySnapshot) => {
+        allMembers = []; 
+        querySnapshot.forEach((doc) => {
+            allMembers.push({ id: doc.id, ...doc.data() });
+        });
+        renderMembers();
+    });
+
+    function renderMembers() {
+        listContainer.innerHTML = '';
+
+        const filteredData = allMembers.filter(member => {
+            if (currentFilter === 'all') return true;
+            return member.role === currentFilter;
+        });
+
+        if (filteredData.length === 0) {
+            listContainer.innerHTML = `<li class="list-group-item text-center text-muted py-4">沒有找到相關成員</li>`;
+            return;
+        }
+
+        const currentUser = auth.currentUser;
+
+        filteredData.forEach(member => {
+            // 1. 判斷角色與狀態標籤
+            let badgeHtml = '';
+            if (member.role === 'teacher') {
+                badgeHtml = '<span class="badge bg-primary">教師</span>';
+            } else {
+                if (member.status === 'online') {
+                    badgeHtml = '<span class="badge bg-success">線上</span>';
+                } else {
+                    badgeHtml = '<span class="badge bg-light text-secondary border">離線</span>';
+                }
+            }
+
+            // 2. 判斷是不是「我自己」
+            let isMe = false;
+            if (currentUser && member.email === currentUser.email) {
+                isMe = true;
+            }
+
+            // 3. 決定頭像圖片邏輯 
+            // 預設: 使用 UI Avatars 自動生成
+            const avatarColor = member.role === 'teacher' ? '0d6efd' : 'random';
+            let avatarUrl = `https://ui-avatars.com/api/?name=${member.name}&background=${avatarColor}&color=fff&size=128`;
+
+            // 優先順序 A: 如果資料庫裡有 photoURL (大家都能看到)
+            if (member.photoURL) {
+                avatarUrl = member.photoURL;
+            } 
+            // 優先順序 B: 如果資料庫沒有，但這是我自己 (顯示我現在 Google 的頭像)
+            else if (isMe && currentUser.photoURL) {
+                avatarUrl = currentUser.photoURL;
+            }
+
+            // 4. 產生 HTML
+            const li = document.createElement('li');
+            li.className = "list-group-item d-flex align-items-center p-3";
+            li.innerHTML = `
+                <img src="${avatarUrl}" class="rounded-circle me-3 border" width="45" height="45" alt="${member.name}" style="object-fit: cover;">
+                <div class="flex-grow-1">
+                    <h6 class="mb-0 fw-bold text-dark">
+                        ${member.name} 
+                        ${isMe ? '<span class="text-muted small ms-1">(您)</span>' : ''}
+                    </h6>
+                    <small class="text-muted" style="font-size: 0.85rem;">${member.email}</small>
                 </div>
+                <div>${badgeHtml}</div>
+            `;
+            
+            listContainer.appendChild(li);
+        });
+    }
 
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="user-menu" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle fs-4 me-2"></i>
-                            <span>載入中...</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">瀏覽個人資料</a></li>
-                            <li><a class="dropdown-item" href="#">登出</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-
-    <main class="container my-5">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.html">首頁</a></li>
-                <li class="breadcrumb-item"><a href="course.html">元宇宙禪修</a></li>
-                <li class="breadcrumb-item active">成員列表</li>
-            </ol>
-        </nav>
-
-        <div class="row g-5">
-            <div class="col-lg-8">
-                <h1 class="display-6 fw-bold mb-4">成員列表</h1>
-                
-                <div class="card border" style="transform: none !important; transition: none !important; box-shadow: none !important;">
-                    <div class="card-header bg-light">
-                        <ul class="nav nav-tabs card-header-tabs" id="member-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#" data-filter="all">全部</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-filter="teacher">教師</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-filter="student">學生</a>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <ul id="member-list" class="list-group list-group-flush" style="min-height: 200px;">
-                        <li class="text-center py-5 text-muted">
-                            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                            正在載入成員...
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <aside class="col-lg-4">
-                <div class="card sticky-top border" style="top: 100px; transform: none !important; transition: none !important; box-shadow: none !important;">
-                    <div class="card-header bg-light"><h5 class="mb-0">快速連結</h5></div>
-                    <div class="list-group list-group-flush">
-                        <a href="course.html" class="list-group-item list-group-item-action">
-                            <i class="bi bi-arrow-left me-2"></i>回到課程首頁
-                        </a>
-                        <a href="course-1141_0178-announcements.html" class="list-group-item list-group-item-action">
-                            <i class="bi bi-megaphone-fill me-2"></i>課程公告
-                        </a>
-                        <a href="course-1141_0178-members.html" class="list-group-item list-group-item-action active">
-                            <i class="bi bi-people-fill me-2"></i>成員列表
-                        </a>
-                        <a href="course-1141_0178-grades.html" class="list-group-item list-group-item-action">
-                            <i class="bi bi-bar-chart-fill me-2"></i>課程成績
-                        </a>
-                        <a href="course-1141_0178-forum.html" class="list-group-item list-group-item-action">
-                            <i class="bi bi-chat-dots-fill me-2"></i>討論區
-                        </a>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </main>
-
-    <footer class="bg-dark text-white mt-5">
-        <div class="container py-4">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">© 2025 Raaay. All rights reserved.</p>
-                    <small>本網站為課程前端工程設計Redesign作品，原Moodle平台的設計太反人類。</small>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <a href="https://www.ntue.edu.tw/" class="text-white me-3">校首頁</a>
-                    <a href="#" class="text-white">校園入口網</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <a id="back-to-top-btn" href="#top" aria-label="Back to top">↑</a>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="js/firebase-auth.js"></script>
-    <script src="js/main.js"></script>
-    <script type="module" src="js/course-1141_0178-members-page.js"></script>
-</body>
-</html>
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            tabs.forEach(t => t.classList.remove('active'));
+            e.target.classList.add('active');
+            currentFilter = e.target.getAttribute('data-filter');
+            renderMembers();
+        });
+    });
+});
