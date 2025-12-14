@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="icon" href="image/noodle-favicon.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="image/noodle-favicon.jpg" type="image/jpeg">
 </head>
+
 <body>
 
     <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
@@ -41,7 +43,8 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="user-menu" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="user-menu"
+                            role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-4 me-2"></i>
                             <span>載入中...</span>
                         </a>
@@ -67,15 +70,17 @@
         <div class="row g-5">
             <div class="col-lg-8">
                 <h1 class="display-6 fw-bold mb-4">我的成績</h1>
-                
-                <div class="card mb-4 bg-primary text-white border" style="transform: none !important; transition: none !important; box-shadow: none !important;">
+
+                <div class="card mb-4 bg-primary text-white border"
+                    style="transform: none !important; transition: none !important; box-shadow: none !important;">
                     <div class="card-body text-center p-4">
-                        <h2 class="display-1 fw-bold">88</h2>
+                        <h2 class="display-1 fw-bold" id="total-score-display">--</h2>
                         <p class="fs-5">目前預估總成績</p>
                     </div>
                 </div>
 
-                <div class="card border" style="transform: none !important; transition: none !important; box-shadow: none !important;">
+                <div class="card border"
+                    style="transform: none !important; transition: none !important; box-shadow: none !important;">
                     <div class="card-header bg-light">成績細項</div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -87,24 +92,12 @@
                                     <th>評語</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="grades-list">
                                 <tr>
-                                    <td><i class="bi bi-file-earmark-text me-2"></i>作業1：個人房間</td>
-                                    <td>20%</td>
-                                    <td><span class="badge bg-success fs-6">90</span></td>
-                                    <td class="text-muted">做得很好，細節很棒！</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="bi bi-file-earmark-text me-2"></i>作業2：熱睪人</td>
-                                    <td>20%</td>
-                                    <td><span class="badge bg-warning text-dark fs-6">85</span></td>
-                                    <td class="text-muted">模型還可以再精簡</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="bi bi-lightning-charge me-2"></i>期中報告</td>
-                                    <td>30%</td>
-                                    <td><span class="badge bg-secondary fs-6">--</span></td>
-                                    <td class="text-muted">尚未評分</td>
+                                    <td colspan="4" class="text-center py-4 text-muted">
+                                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                        正在查詢成績...
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -113,14 +106,22 @@
             </div>
 
             <aside class="col-lg-4">
-                <div class="card sticky-top border" style="top: 100px; transform: none !important; transition: none !important; box-shadow: none !important;">
-                    <div class="card-header bg-light"><h5 class="mb-0">快速連結</h5></div>
+                <div class="card sticky-top border"
+                    style="top: 100px; transform: none !important; transition: none !important; box-shadow: none !important;">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">快速連結</h5>
+                    </div>
                     <div class="list-group list-group-flush">
-                         <a href="course.html" class="list-group-item list-group-item-action"><i class="bi bi-arrow-left me-2"></i>回到課程首頁</a>
-                        <a href="course-1141_0178-announcements.html" class="list-group-item list-group-item-action"><i class="bi bi-megaphone-fill me-2"></i>課程公告</a>
-                        <a href="course-1141_0178-members.html" class="list-group-item list-group-item-action"><i class="bi bi-people-fill me-2"></i>成員列表</a>
-                        <a href="course-1141_0178-grades.html" class="list-group-item list-group-item-action active"><i class="bi bi-bar-chart-fill me-2"></i>課程成績</a>
-                        <a href="course-1141_0178-forum.html" class="list-group-item list-group-item-action"><i class="bi bi-chat-dots-fill me-2"></i>討論區</a>
+                        <a href="course.html" class="list-group-item list-group-item-action"><i
+                                class="bi bi-arrow-left me-2"></i>回到課程首頁</a>
+                        <a href="course-1141_0178-announcements.html" class="list-group-item list-group-item-action"><i
+                                class="bi bi-megaphone-fill me-2"></i>課程公告</a>
+                        <a href="course-1141_0178-members.html" class="list-group-item list-group-item-action"><i
+                                class="bi bi-people-fill me-2"></i>成員列表</a>
+                        <a href="course-1141_0178-grades.html" class="list-group-item list-group-item-action active"><i
+                                class="bi bi-bar-chart-fill me-2"></i>課程成績</a>
+                        <a href="course-1141_0178-forum.html" class="list-group-item list-group-item-action"><i
+                                class="bi bi-chat-dots-fill me-2"></i>討論區</a>
                     </div>
                 </div>
             </aside>
@@ -147,5 +148,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="js/firebase-auth.js"></script>
     <script src="js/main.js"></script>
+    <script type="module" src="js/course-grades-page.js"></script>
 </body>
+
 </html>
