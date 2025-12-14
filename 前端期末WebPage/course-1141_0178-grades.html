@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程成績 | NTUE Noodle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/course.css">
+    <link rel="icon" href="image/noodle-favicon.jpg" type="image/jpeg">
+    <link rel="shortcut icon" href="image/noodle-favicon.jpg" type="image/jpeg">
+</head>
+<body>
+
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">
+                <img src="image/ntue_logo.png" alt="NTUE Logo" height="40">
+                <span class="ms-2 fw-bold">Noodle 教學平台</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="main-nav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">首頁</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">儀表板</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">所有課程</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center ms-lg-3 me-3">
+                    <i class="bi bi-sun-fill theme-icon-active" id="theme-icon-sun"></i>
+                    <div class="form-check form-switch mx-1">
+                        <input class="form-check-input" type="checkbox" role="switch" id="theme-switch">
+                    </div>
+                    <i class="bi bi-moon-fill" id="theme-icon-moon"></i>
+                </div>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="user-menu" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle fs-4 me-2"></i>
+                            <span>載入中...</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">瀏覽個人資料</a></li>
+                            <li><a class="dropdown-item" href="#">登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard.html">首頁</a></li>
+                <li class="breadcrumb-item"><a href="course.html">元宇宙概論</a></li>
+                <li class="breadcrumb-item active">課程成績</li>
+            </ol>
+        </nav>
+
+        <div class="row g-5">
+            <div class="col-lg-8">
+                <h1 class="display-6 fw-bold mb-4">我的成績</h1>
+                
+                <div class="card mb-4 bg-primary text-white border" style="transform: none !important; transition: none !important; box-shadow: none !important;">
+                    <div class="card-body text-center p-4">
+                        <h2 class="display-1 fw-bold">88</h2>
+                        <p class="fs-5">目前預估總成績</p>
+                    </div>
+                </div>
+
+                <div class="card border" style="transform: none !important; transition: none !important; box-shadow: none !important;">
+                    <div class="card-header bg-light">成績細項</div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>項目名稱</th>
+                                    <th>比重</th>
+                                    <th>分數</th>
+                                    <th>評語</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="bi bi-file-earmark-text me-2"></i>作業1：個人房間</td>
+                                    <td>20%</td>
+                                    <td><span class="badge bg-success fs-6">90</span></td>
+                                    <td class="text-muted">做得很好，細節很棒！</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-file-earmark-text me-2"></i>作業2：熱睪人</td>
+                                    <td>20%</td>
+                                    <td><span class="badge bg-warning text-dark fs-6">85</span></td>
+                                    <td class="text-muted">模型還可以再精簡</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-lightning-charge me-2"></i>期中報告</td>
+                                    <td>30%</td>
+                                    <td><span class="badge bg-secondary fs-6">--</span></td>
+                                    <td class="text-muted">尚未評分</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-lg-4">
+                <div class="card sticky-top border" style="top: 100px; transform: none !important; transition: none !important; box-shadow: none !important;">
+                    <div class="card-header bg-light"><h5 class="mb-0">快速連結</h5></div>
+                    <div class="list-group list-group-flush">
+                         <a href="course.html" class="list-group-item list-group-item-action"><i class="bi bi-arrow-left me-2"></i>回到課程首頁</a>
+                        <a href="course-1141_0178-announcements.html" class="list-group-item list-group-item-action"><i class="bi bi-megaphone-fill me-2"></i>課程公告</a>
+                        <a href="course-1141_0178-members.html" class="list-group-item list-group-item-action"><i class="bi bi-people-fill me-2"></i>成員列表</a>
+                        <a href="course-1141_0178-grades.html" class="list-group-item list-group-item-action active"><i class="bi bi-bar-chart-fill me-2"></i>課程成績</a>
+                        <a href="course-1141_0178-forum.html" class="list-group-item list-group-item-action"><i class="bi bi-chat-dots-fill me-2"></i>討論區</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 Raaay. All rights reserved.</p>
+                    <small>本網站為課程前端工程設計Redesign作品，原Moodle平台的設計太反人類。</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="https://www.ntue.edu.tw/" class="text-white me-3">校首頁</a>
+                    <a href="#" class="text-white">校園入口網</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a id="back-to-top-btn" href="#top" aria-label="Back to top">↑</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/firebase-auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
