@@ -111,6 +111,13 @@ footer {
     object-fit: cover;
 }
 
+/* 所有課程頁面的課程卡片圖片 */
+.course-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
 /* =========================================
    深色模式設定 (Dark Mode)
    ========================================= */
