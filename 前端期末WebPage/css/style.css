@@ -437,6 +437,13 @@ body.dark-mode {
         font-size: 0.9rem;
     }
     
+    /* 修正登入頁無法滾動的問題 */
+    body, html {
+        height: auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden;
+    }
+    
     /* Navbar 手機版優化 */
     .navbar-brand img {
         height: 32px;
@@ -454,7 +461,8 @@ body.dark-mode {
     .announcement-section {
         border-right: none;
         border-bottom: 1px solid #dee2e6;
-        padding: 2rem 1rem !important;
+        padding: 1.5rem 1rem !important;
+        min-height: auto;
     }
     
     .announcement-section .container {
@@ -463,15 +471,17 @@ body.dark-mode {
     }
     
     .announcement-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.75rem !important;
     }
     
     .announcement-section p {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem !important;
     }
     
     .scrollable-list {
-        max-height: 60vh;
+        max-height: 50vh;
     }
     
     /* 公告項目在手機版的優化 - 改為垂直排列 */
@@ -509,29 +519,36 @@ body.dark-mode {
         margin-left: 0 !important;
     }
     
-    /* 登入卡片手機版優化 */
+    /* 登入卡片手機版優化 - 縮小尺寸讓畫面更緊湊 */
     .login-card {
         max-width: 100%;
-        margin: 2rem 1rem;
-        padding: 1.5rem 1.25rem;
+        margin: 1.5rem 1rem 2rem 1rem;
+        padding: 1.25rem 1rem;
     }
     
     .login-card img {
-        width: 90px;
-        margin-bottom: 1rem !important;
+        width: 80px;
+        margin-bottom: 0.75rem !important;
     }
     
     .login-card h2 {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
+        margin-bottom: 0.5rem !important;
     }
     
     .login-card p {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem !important;
     }
     
     .login-card .btn {
-        padding: 0.65rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .login-card .text-muted.small {
+        font-size: 0.7rem !important;
+        margin-top: 0.75rem !important;
     }
     
     /* Hero Section 手機版 */
