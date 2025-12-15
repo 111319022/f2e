@@ -335,58 +335,8 @@ body.dark-mode {
 }
 
 /* =========================================
-   登入頁專用樣式 (index.html)
-   ========================================= */
-
-/* 左側公告區背景色 */
-.announcement-section {
-    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6;
-}
-
-/* 公告max height */
-.scrollable-list {
-    max-height: 70vh;
-    overflow-y: auto;
-}
-
-/* 登入卡片 */
-.login-card {
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-    border-radius: 1rem;
-    background-color: var(--surface-color, #fff);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    text-align: center;
-}
-
-/* 公告列表項目優化 */
-.announcement-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-}
-
-.announcement-list-item > div {
-    flex: 1;
-    min-width: 0;
-}
-
-.announcement-list-item h6 {
-    margin-bottom: 0.25rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.announcement-list-item .badge {
-    flex-shrink: 0;
-}
-
-/* =========================================
    RWD 響應式斷點 (3 Breakpoints)
+   全站共用的響應式設計
    ========================================= */
 
 /* ===== Desktop (≥ 992px) - 預設樣式已在上方定義 ===== */
@@ -396,22 +346,6 @@ body.dark-mode {
     /* Navbar 在平板上的優化 */
     .navbar-nav .nav-link {
         padding: 0.5rem 0.75rem;
-    }
-    
-    /* 登入頁 - 改為上下堆疊 */
-    .announcement-section {
-        border-right: none;
-        border-bottom: 1px solid #dee2e6;
-    }
-    
-    .scrollable-list {
-        max-height: 50vh;
-    }
-    
-    .login-card {
-        max-width: 450px;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
     }
     
     /* 課程卡片在平板上調整高度 */
@@ -437,13 +371,6 @@ body.dark-mode {
         font-size: 0.9rem;
     }
     
-    /* 修正登入頁無法滾動的問題 */
-    body, html {
-        height: auto !important;
-        overflow-y: auto !important;
-        overflow-x: hidden;
-    }
-    
     /* Navbar 手機版優化 */
     .navbar-brand img {
         height: 32px;
@@ -455,100 +382,6 @@ body.dark-mode {
     
     .navbar-nav .nav-link {
         padding: 0.5rem 0;
-    }
-    
-    /* 登入頁 - 手機版優化 */
-    .announcement-section {
-        border-right: none;
-        border-bottom: 1px solid #dee2e6;
-        padding: 1.5rem 1rem !important;
-        min-height: auto;
-    }
-    
-    .announcement-section .container {
-        max-width: 100%;
-        padding: 0;
-    }
-    
-    .announcement-section h2 {
-        font-size: 1.4rem;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .announcement-section p {
-        font-size: 0.85rem;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .scrollable-list {
-        max-height: 50vh;
-    }
-    
-    /* 公告項目在手機版的優化 - 改為垂直排列 */
-    .announcement-list-item,
-    .list-group-item {
-        flex-direction: column;
-        align-items: flex-start !important;
-        gap: 0.5rem;
-        padding: 1rem 0.75rem;
-    }
-    
-    .announcement-list-item > div,
-    .list-group-item > div {
-        width: 100%;
-    }
-    
-    .announcement-list-item h6,
-    .list-group-item h6 {
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
-        font-size: 0.95rem;
-        line-height: 1.4;
-    }
-    
-    .announcement-list-item small,
-    .list-group-item small {
-        font-size: 0.75rem;
-    }
-    
-    .announcement-list-item .badge,
-    .list-group-item .badge {
-        align-self: flex-start;
-        margin-top: 0.25rem;
-        margin-left: 0 !important;
-    }
-    
-    /* 登入卡片手機版優化 - 縮小尺寸讓畫面更緊湊 */
-    .login-card {
-        max-width: 100%;
-        margin: 1.5rem 1rem 2rem 1rem;
-        padding: 1.25rem 1rem;
-    }
-    
-    .login-card img {
-        width: 80px;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .login-card h2 {
-        font-size: 1.15rem;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    .login-card p {
-        font-size: 0.8rem;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .login-card .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    .login-card .text-muted.small {
-        font-size: 0.7rem !important;
-        margin-top: 0.75rem !important;
     }
     
     /* Hero Section 手機版 */
