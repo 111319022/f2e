@@ -12,41 +12,19 @@
                 height: 100%;
                 overflow: hidden; 
             }
-            
-            /* 左側公告區背景色 */
-            .announcement-section {
-                background-color: #f8f9fa; /* 淺灰底色 */
-                border-right: 1px solid #dee2e6;
-            }
-
-            /* 公告max height */
-            .scrollable-list {
-                max-height: 70vh;
-                overflow-y: auto;
-            }
-
-            .login-card {
-                width: 100%;
-                max-width: 400px;
-                padding: 2rem;
-                border-radius: 1rem;
-                background-color: var(--surface-color, #fff);
-                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-                text-align: center;
-            }
         </style>
     </head>
     <body>
 
         <div class="container-fluid h-100">
-            <div class="row h-100">
+            <div class="row h-100 g-0">
                 
-                <div class="col-lg-7 d-flex flex-column justify-content-center p-5 announcement-section">
-                    <div class="container" style="max-width: 800px;">
-                        <h2 class="display-6 fw-bold mb-4 text-primary">
+                <div class="col-12 col-lg-7 d-flex flex-column justify-content-center p-3 p-md-4 p-lg-5 announcement-section">
+                    <div class="container" style="max-width: 900px;">
+                        <h2 class="display-6 fw-bold mb-3 mb-md-4 text-primary">
                             <i class="bi bi-megaphone-fill me-2"></i>最新公告
                         </h2>
-                        <p class="text-muted mb-4">嗨！看一下我</p>
+                        <p class="text-muted mb-3 mb-md-4">嗨！看一下我</p>
 
                         <div id="announcement-list" class="list-group shadow-sm scrollable-list">
                             <div class="text-center text-muted py-3">
@@ -57,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-5 d-flex align-items-center justify-content-center bg-white">
+                <div class="col-12 col-lg-5 d-flex align-items-center justify-content-center bg-white py-4 py-lg-0">
                     <div class="login-card mx-3">
                         <img src="image/noodle-logo.png" alt="NTUE Logo" width="120" class="mb-4">
                         <h2 class="h3 fw-bold mb-3">歡迎來到 Noodle</h2>
