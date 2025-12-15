@@ -10,7 +10,7 @@
         body { background-color: #f8f9fa; }
         .log-container {
             background-color: #212529;
-            color: #0a3f0a;
+            color: #e782aa;
             font-family: monospace;
             padding: 1rem;
             border-radius: 0.5rem;
@@ -21,6 +21,16 @@
             font-weight: bold;
             color: #599bff;
             border-top: 3px solid #0b4baa;
+        }
+        .code-example {
+            background-color: #f1f3f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: #333;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
         }
     </style>
 </head>
@@ -49,7 +59,7 @@
                         <button class="nav-link" id="announce-tab" data-bs-toggle="tab" data-bs-target="#announce-panel" type="button" role="tab">發布全站公告</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link text-danger" id="batch-tab" data-bs-toggle="tab" data-bs-target="#batch-panel" type="button" role="tab">批次/重置工具</button>
+                        <button class="nav-link text-danger" id="batch-tab" data-bs-toggle="tab" data-bs-target="#batch-panel" type="button" role="tab">進階批次指令</button>
                     </li>
                 </ul>
             </div>
@@ -145,19 +155,93 @@
                     </div>
 
                     <div class="tab-pane fade" id="batch-panel" role="tabpanel">
-                        <div class="alert alert-warning border-warning">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <strong>注意：</strong> 這些按鈕會快速寫入多筆資料。如果該課程代碼已存在，將會直接覆蓋。
+                        <div class="alert alert-secondary d-flex align-items-center">
+                            <i class="bi bi-code-square me-3 fs-3"></i>
+                            <div>
+                                <strong>JSON 批次匯入模式</strong><br>
+                                請在下方貼上 JSON 陣列格式的資料。系統會解析並自動寫入資料庫。
+                            </div>
                         </div>
-                        
-                        <div class="d-grid gap-3 col-md-6 mx-auto mt-4">
-                            <button id="btn-batch-courses" class="btn btn-outline-dark btn-lg">
-                                <i class="bi bi-collection-fill me-2"></i> 一鍵匯入 6 門預設課程
-                            </button>
-                            <button id="btn-batch-announcements" class="btn btn-outline-secondary btn-lg">
-                                <i class="bi bi-card-text me-2"></i> 一鍵匯入 3 則範例公告
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">1. 選擇匯入目標</label>
+                                <select class="form-select" id="batch-target">
+                                    <option value="all_course">課程資料 (all_course)</option>
+                                    <option value="announcements">全站公告 (announcements)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-dark btn-sm" id="btn-copy-course-json">複製課程格式範例</button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="btn-copy-announce-json">複製公告格式範例</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">2. 輸入 JSON 資料陣列</label>
+                            <textarea class="form-control font-monospace" id="batch-json-input" rows="10" placeholder='[
+  {
+    "code": "1141_9999",
+    "title": "範例課程",
+    ...
+  }
+]' style="background-color: #2b2b2b; color: #f8f9fa; border: 1px solid #444;"></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-muted small">
+                                <i class="bi bi-info-circle"></i> 請確保 JSON 格式正確，屬性名稱需用雙引號包起來。
+                            </div>
+                            <button id="btn-run-batch" class="btn btn-danger btn-lg">
+                                <i class="bi bi-play-fill"></i> 執行批次匯入
                             </button>
                         </div>
+
+                        <div class="d-none" id="example-course-json">
+[
+  {
+    "code": "1141_0101",
+    "title": "範例：基礎程式設計",
+    "type": "必修",
+    "department": "資科系",
+    "teacher": "王小明",
+    "description": "學習 Python 基礎語法。",
+    "progress": 0,
+    "link": "#",
+    "image": "https://placehold.co/600x400/000/fff?text=Python"
+  },
+  {
+    "code": "1141_0102",
+    "title": "範例：網頁設計",
+    "type": "選修",
+    "department": "資科系",
+    "teacher": "李小華",
+    "description": "HTML 與 CSS 入門。",
+    "progress": 0,
+    "link": "#",
+    "image": "https://placehold.co/600x400/000/fff?text=Web"
+  }
+]</div>
+                        <div class="d-none" id="example-announce-json">
+[
+  {
+    "title": "範例：期中考週提醒",
+    "content": "下週為期中考週，請同學提早準備。",
+    "date": "2025-11-01",
+    "tag": "重要",
+    "author": "教務處"
+  },
+  {
+    "title": "範例：校園徵才博覽會",
+    "content": "歡迎大四學生踴躍參加。",
+    "date": "2025-11-15",
+    "tag": "活動",
+    "author": "學務處"
+  }
+]</div>
+
                     </div>
 
                 </div>
@@ -171,7 +255,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-        // 設定檔
         const firebaseConfig = {
             apiKey: "AIzaSyA6odCZUzRQVwlMv4Pnu55qGKwEFv2fzeo",
             authDomain: "ntue-moodle-resedign.firebaseapp.com",
@@ -185,18 +268,15 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // UI 元素
         const logConsole = document.getElementById('log-console');
         const courseForm = document.getElementById('course-form');
         const announceForm = document.getElementById('announce-form');
         
-        // 設定今天的日期為預設值
         document.getElementById('a-date').valueAsDate = new Date();
 
-        // 紀錄小工具
         function log(msg, type = 'info') {
             const time = new Date().toLocaleTimeString();
-            let color = '#00ff00'; // success
+            let color = '#00ff00'; 
             if (type === 'error') color = '#ff4444';
             if (type === 'warn') color = '#ffbb33';
             
@@ -207,9 +287,7 @@
             logConsole.scrollTop = logConsole.scrollHeight;
         }
 
-        // ==========================================
-        // 功能 1: 新增單一課程
-        // ==========================================
+        // --- Tab 1: 單一課程 (保持不變) ---
         courseForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = courseForm.querySelector('button');
@@ -229,7 +307,6 @@
             };
 
             try {
-                // 使用 setDoc 並指定 code 為 ID
                 await setDoc(doc(db, "all_course", code), data);
                 log(`✅ 課程新增成功：${data.title} (${code})`);
                 courseForm.reset();
@@ -240,9 +317,7 @@
             btn.disabled = false;
         });
 
-        // ==========================================
-        // 功能 2: 新增全站公告
-        // ==========================================
+        // --- Tab 2: 單一公告 (保持不變) ---
         announceForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = announceForm.querySelector('button');
@@ -257,10 +332,8 @@
             };
 
             try {
-                // 使用 addDoc 自動生成 ID
                 await addDoc(collection(db, "announcements"), data);
                 log(`✅ 公告發布成功：${data.title}`);
-                // 只清空標題和內容，日期和作者保留方便連續輸入
                 document.getElementById('a-title').value = '';
                 document.getElementById('a-content').value = '';
                 document.getElementById('a-tag').value = '';
@@ -272,50 +345,87 @@
         });
 
         // ==========================================
-        // 功能 3: 批次匯入工具
+        // 🔥 Tab 3: JSON 批次匯入指令 (新功能)
         // ==========================================
-        
-        // 匯入課程
-        document.getElementById('btn-batch-courses').addEventListener('click', async () => {
-             const coursesData = [
-                { code: "1141_0178", title: "元宇宙禪修", type: "選修", department: "歐伊系", teacher: "愷均", description: "探索靈界的未來與技術。", progress: 66, link: "course-1141_0178.html", image: "image/愷均.jpg" },
-                { code: "1141_6666", title: "美術館大探索", type: "必修", department: "加分加到系", teacher: "Rivers", description: "取得鑰匙者加6分！", progress: 75, link: "#", image: "image/李至軒.jpg" },
-                { code: "1141_0770", title: "前端工程設計", type: "選修", department: "數位科技設計系", teacher: "齊山", description: "電腦教室不能吃優格:L。", progress: 90, link: "#", image: "image/齊山.jpg" },
-                { code: "1141_4444", title: "沒有邏輯", type: "跨校通識", department: "哲學系", teacher: "我忘了", description: "台大的邏輯課", progress: 0, link: "#", image: "https://placehold.co/600x400/000000/ffffff?text=Logic :L" },
-                { code: "1141_0555", title: "爬山實戰", type: "通識", department: "文創系", teacher: "展立", description: "運動身體好", progress: 10, link: "#", image: "https://placehold.co/600x400/000000/ffffff?text=Mt. Climbing" },
-                { code: "1141_0999", title: "多媒體設計", type: "選修", department: "數位科技設計系", teacher: "Rivers", description: "為啥上Blender？朱如不要亂來", progress: 30, link: "#", image: "https://placehold.co/600x400/8B0000/ffffff?text=Why Blender?" }
-            ];
 
-            if(!confirm("確定要匯入 6 筆預設課程嗎？如果代碼重複將會覆蓋。")) return;
+        const batchInput = document.getElementById('batch-json-input');
 
-            log('🚀 開始批次匯入課程...');
-            for (const c of coursesData) {
-                try {
-                    await setDoc(doc(db, "all_course", c.code), c);
-                    log(`  + 成功：${c.title}`);
-                } catch(e) { log(`  - 失敗：${e.message}`, 'error'); }
-            }
-            log('🏁 課程匯入完成！');
+        // 複製範例功能
+        document.getElementById('btn-copy-course-json').addEventListener('click', () => {
+            const example = document.getElementById('example-course-json').innerText.trim();
+            batchInput.value = example;
+            document.getElementById('batch-target').value = 'all_course';
+            log('ℹ️ 已填入課程 JSON 範例', 'warn');
         });
 
-        // 匯入公告
-        document.getElementById('btn-batch-announcements').addEventListener('click', async () => {
-             const announceData = [
-                { title: "【系統維護】本週五暫停服務", date: "2025-10-30", tag: "重要", author: "系統管理員", content: "為了提升服務品質，網站將於週五凌晨進行維護，請見諒。" },
-                { title: "114學年度選課須知", date: "2025-10-28", tag: "置頂", author: "教務處", content: "選課系統即將開放，請同學注意時間。" },
-                { title: "校園馬拉松報名開始", date: "2025-10-25", tag: "活動", author: "體育室", content: "歡迎全校師生踴躍報名參加。" }
-            ];
+        document.getElementById('btn-copy-announce-json').addEventListener('click', () => {
+            const example = document.getElementById('example-announce-json').innerText.trim();
+            batchInput.value = example;
+            document.getElementById('batch-target').value = 'announcements';
+            log('ℹ️ 已填入公告 JSON 範例', 'warn');
+        });
 
-            if(!confirm("確定要匯入 3 筆範例公告嗎？")) return;
-
-            log('🚀 開始批次匯入公告...');
-            for (const a of announceData) {
-                try {
-                    await addDoc(collection(db, "announcements"), a);
-                    log(`  + 成功：${a.title}`);
-                } catch(e) { log(`  - 失敗：${e.message}`, 'error'); }
+        // 執行批次匯入
+        document.getElementById('btn-run-batch').addEventListener('click', async () => {
+            const rawJson = batchInput.value.trim();
+            const targetCollection = document.getElementById('batch-target').value;
+            const btn = document.getElementById('btn-run-batch');
+            
+            if (!rawJson) {
+                log('❌ 請先輸入 JSON 資料！', 'error');
+                return;
             }
-            log('🏁 公告匯入完成！');
+
+            let dataArray;
+            try {
+                dataArray = JSON.parse(rawJson);
+            } catch (e) {
+                log(`❌ JSON 格式錯誤：${e.message}`, 'error');
+                log('💡 提示：請檢查逗號、引號是否正確，最後一項不能有逗號。', 'warn');
+                return;
+            }
+
+            if (!Array.isArray(dataArray)) {
+                log('❌ 錯誤：輸入的必須是陣列格式 [...]', 'error');
+                return;
+            }
+
+            if (!confirm(`確定要匯入 ${dataArray.length} 筆資料到 ${targetCollection} 嗎？`)) return;
+
+            btn.disabled = true;
+            log(`🚀 開始批次匯入 ${dataArray.length} 筆資料...`);
+
+            let successCount = 0;
+            let failCount = 0;
+
+            for (const item of dataArray) {
+                try {
+                    if (targetCollection === 'all_course') {
+                        // 檢查是否有課程代碼 (必填)
+                        if (!item.code) throw new Error("缺少 'code' 欄位");
+                        
+                        // 課程使用 setDoc (用 code 當 ID)
+                        await setDoc(doc(db, "all_course", item.code), item);
+                        log(`  + 課程成功：${item.title || item.code}`);
+                    
+                    } else if (targetCollection === 'announcements') {
+                        // 公告使用 addDoc (自動 ID)
+                        // 檢查必填欄位
+                        if (!item.title) throw new Error("缺少 'title' 欄位");
+                        
+                        await addDoc(collection(db, "announcements"), item);
+                        log(`  + 公告成功：${item.title}`);
+                    }
+                    successCount++;
+                } catch (error) {
+                    failCount++;
+                    log(`  - 匯入失敗：${error.message}`, 'error');
+                    console.error(item, error);
+                }
+            }
+
+            log(`🏁 作業結束！成功: ${successCount}, 失敗: ${failCount}`, 'warn');
+            btn.disabled = false;
         });
 
     </script>
