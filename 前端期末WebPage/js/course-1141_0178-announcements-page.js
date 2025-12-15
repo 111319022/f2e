@@ -40,12 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = "list-group-item list-group-item-action p-4 mb-3 border rounded"; 
             
             item.innerHTML = `
-                <div class="d-flex w-100 justify-content-between align-items-center mb-2">
-                    <h5 class="mb-1 fw-bold text-primary">${data.title} ${badgeHtml}</h5>
-                    <small class="text-muted"><i class="bi bi-clock me-1"></i>${data.date}</small>
-                </div>
-                <p class="mb-1 text-dark text-truncate" style="max-width: 90%;">${data.content || '點擊查看詳情...'}</p>
-                <small class="text-muted">由 ${data.author} 發布</small>
+                <h5 class="mb-2 fw-bold text-primary">${data.title} ${badgeHtml}</h5>
+                <small class="text-muted d-block mb-2"><i class="bi bi-clock me-1"></i>${data.date} · 由 ${data.author} 發布</small>
+                <p class="mb-0 text-dark text-truncate" style="max-width: 95%;">${data.content || '點擊查看詳情...'}</p>
             `;
 
             item.addEventListener('click', (e) => {
