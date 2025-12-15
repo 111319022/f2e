@@ -13,6 +13,39 @@
     <!-- favicon  -->
     <link rel="icon" href="image/noodle-favicon.jpg" type="image/jpeg">
     <link rel="shortcut icon" href="image/noodle-favicon.jpg" type="image/jpeg">
+    
+    <style>
+        .hero-section h1 {
+            display: inline-block;
+            border-right: 3px solid #333;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.7s step-end infinite;
+            opacity: 0;
+        }
+        
+        .hero-section h1.typing-active {
+            opacity: 1;
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        .hero-section h1.typing-done {
+            border-right: none;
+            animation: none;
+        }
+        
+        .hero-section p {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        
+        .hero-section p.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -199,5 +232,68 @@
 
    <script src="js/main.js"></script>
    <script type="module" src="js/firebase-announcement.js"></script>
+   
+   <script>
+       // 打字機效果
+       const welcomeElement = document.getElementById('welcome-message');
+       const subtitle = document.querySelector('.hero-section p');
+       let hasTyped = false; // 防止重複執行
+       
+       // 用 MutationObserver 監聽文字變化（等 Firebase 更新完用戶名）
+       const observer = new MutationObserver((mutations) => {
+           if (hasTyped) return; // 已經執行過就跳過
+           
+           mutations.forEach((mutation) => {
+               if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                   // 停止監聽，開始打字動畫
+                   observer.disconnect();
+                   startTyping();
+               }
+           });
+       });
+       
+       // 開始監聽 welcome-message 的文字變化
+       observer.observe(welcomeElement, { 
+           childList: true, 
+           characterData: true, 
+           subtree: true 
+       });
+       
+       // 如果 2 秒後還沒觸發（沒登入或載入失敗），直接開始打字
+       setTimeout(() => {
+           if (hasTyped) return; // 已經執行過就跳過
+           observer.disconnect();
+           if (welcomeElement.textContent) {
+               startTyping();
+           }
+       }, 2000);
+       
+       function startTyping() {
+           if (hasTyped) return; // 防止重複執行
+           hasTyped = true;
+           
+           const fullText = welcomeElement.textContent;
+           welcomeElement.textContent = '';
+           welcomeElement.classList.add('typing-active'); // 顯示元素
+           
+           let index = 0;
+           const typingSpeed = 100;
+           
+           function typeWriter() {
+               if (index < fullText.length) {
+                   welcomeElement.textContent += fullText.charAt(index);
+                   index++;
+                   setTimeout(typeWriter, typingSpeed);
+               } else {
+                   welcomeElement.classList.add('typing-done');
+                   if (subtitle) {
+                       subtitle.classList.add('show');
+                   }
+               }
+           }
+           
+           setTimeout(typeWriter, 100);
+       }
+   </script>
 </body>
 </html>
