@@ -355,14 +355,14 @@
             const example = document.getElementById('example-course-json').innerText.trim();
             batchInput.value = example;
             document.getElementById('batch-target').value = 'all_course';
-            log('ℹ️ 已填入課程 JSON 範例', 'warn');
+            log('已填入課程 JSON 範例', 'warn');
         });
 
         document.getElementById('btn-copy-announce-json').addEventListener('click', () => {
             const example = document.getElementById('example-announce-json').innerText.trim();
             batchInput.value = example;
             document.getElementById('batch-target').value = 'announcements';
-            log('ℹ️ 已填入公告 JSON 範例', 'warn');
+            log('已填入公告 JSON 範例', 'warn');
         });
 
         // 執行批次匯入
@@ -381,7 +381,7 @@
                 dataArray = JSON.parse(rawJson);
             } catch (e) {
                 log(`❌ JSON 格式錯誤：${e.message}`, 'error');
-                log('💡 提示：請檢查逗號、引號是否正確，最後一項不能有逗號。', 'warn');
+                log('提示：請檢查逗號、引號是否正確，最後一項不能有逗號。', 'warn');
                 return;
             }
 
@@ -393,7 +393,7 @@
             if (!confirm(`確定要匯入 ${dataArray.length} 筆資料到 ${targetCollection} 嗎？`)) return;
 
             btn.disabled = true;
-            log(`🚀 開始批次匯入 ${dataArray.length} 筆資料...`);
+            log(`開始批次匯入 ${dataArray.length} 筆資料...`);
 
             let successCount = 0;
             let failCount = 0;
@@ -424,7 +424,7 @@
                 }
             }
 
-            log(`🏁 作業結束！成功: ${successCount}, 失敗: ${failCount}`, 'warn');
+            log(`作業結束！成功: ${successCount}, 失敗: ${failCount}`, 'warn');
             btn.disabled = false;
         });
 
