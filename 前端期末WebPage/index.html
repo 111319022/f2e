@@ -10,16 +10,16 @@
         <style>
             body, html {
                 height: 100%;
-                overflow: hidden; /* 防止出現不必要的捲軸 */
+                overflow: hidden; 
             }
             
             /* 左側公告區背景色 */
             .announcement-section {
-                background-color: #f8f9fa; /* 淺灰底色，區隔視覺 */
+                background-color: #f8f9fa; /* 淺灰底色 */
                 border-right: 1px solid #dee2e6;
             }
 
-            /* 公告列表最大高度，超過自動捲動 */
+            /* 公告max height */
             .scrollable-list {
                 max-height: 70vh;
                 overflow-y: auto;
@@ -61,7 +61,7 @@
                     <div class="login-card mx-3">
                         <img src="image/noodle-logo.png" alt="NTUE Logo" width="120" class="mb-4">
                         <h2 class="h3 fw-bold mb-3">歡迎來到 Noodle</h2>
-                        <p class="text-muted mb-4">請使用學校 Google 帳號登入以繼續</p>
+                        <p class="text-muted mb-4">請使用 Google 帳號登入以繼續</p>
                         
                         <button id="google-login-btn" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center">
                             <i class="bi bi-google me-2"></i> 使用 Google 登入
