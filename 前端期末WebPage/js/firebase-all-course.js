@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let badgeClass = 'bg-secondary';
             if (type === '必修') badgeClass = 'bg-primary';
             else if (type === '選修') badgeClass = 'bg-success';
-            else if (type === '通識') badgeClass = 'bg-warning text-dark';
+            else if (type.includes('通識')) badgeClass = 'bg-warning text-dark';
 
             // 根據進度條顏色
             let progressClass = 'bg-primary';
@@ -129,7 +129,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                               (course.teacher || '').toLowerCase().includes(query);
             
             // 篩選類型
-            const matchType = typeVal === 'all' || course.type === typeVal;
+            let matchType = typeVal === 'all';
+            if (typeVal === '通識') {
+                matchType = (course.type || '').includes('通識');
+            } else if (typeVal !== 'all') {
+                matchType = course.type === typeVal;
+            }
 
             return matchText && matchType;
         });
