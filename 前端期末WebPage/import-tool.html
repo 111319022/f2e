@@ -308,11 +308,11 @@
 
             try {
                 await setDoc(doc(db, "all_course", code), data);
-                log(`✅ 課程新增成功：${data.title} (${code})`);
+                log(`課程新增成功：${data.title} (${code})`);
                 courseForm.reset();
             } catch (error) {
                 console.error(error);
-                log(`❌ 新增失敗：${error.message}`, 'error');
+                log(`新增失敗：${error.message}`, 'error');
             }
             btn.disabled = false;
         });
@@ -333,13 +333,13 @@
 
             try {
                 await addDoc(collection(db, "announcements"), data);
-                log(`✅ 公告發布成功：${data.title}`);
+                log(`公告發布成功：${data.title}`);
                 document.getElementById('a-title').value = '';
                 document.getElementById('a-content').value = '';
                 document.getElementById('a-tag').value = '';
             } catch (error) {
                 console.error(error);
-                log(`❌ 發布失敗：${error.message}`, 'error');
+                log(`發布失敗：${error.message}`, 'error');
             }
             btn.disabled = false;
         });
