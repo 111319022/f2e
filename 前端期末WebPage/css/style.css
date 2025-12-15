@@ -21,8 +21,14 @@ main {
     z-index: 1040; /* 確保導覽列在最上層 */
 }
 
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
 .navbar-brand img {
     height: 40px;
+    margin-top: -2px; /* 讓圖示略往上，與文字居中對齊 */
 }
 
 .navbar-brand span {
