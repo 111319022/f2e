@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noodle 後台資料管理工具</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .log-container {
+            background-color: #212529;
+            color: #0a3f0a;
+            font-family: monospace;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            height: 200px;
+            overflow-y: auto;
+        }
+        .nav-tabs .nav-link.active {
+            font-weight: bold;
+            color: #599bff;
+            border-top: 3px solid #0b4baa;
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="container" style="max-width: 900px;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold"><i class="bi bi-database-gear me-2"></i>Noodle 資料管理後台</h2>
+            <a href="all-course.html" class="btn btn-outline-secondary" target="_blank">預覽前台 <i class="bi bi-box-arrow-up-right"></i></a>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold">系統執行紀錄：</label>
+            <div id="log-console" class="log-container">
+                <div>> 系統準備就緒...</div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <ul class="nav nav-tabs card-header-tabs" id="adminTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="course-tab" data-bs-toggle="tab" data-bs-target="#course-panel" type="button" role="tab">新增課程</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="announce-tab" data-bs-toggle="tab" data-bs-target="#announce-panel" type="button" role="tab">發布全站公告</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-danger" id="batch-tab" data-bs-toggle="tab" data-bs-target="#batch-panel" type="button" role="tab">批次/重置工具</button>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card-body p-4">
+                <div class="tab-content" id="adminTabsContent">
+                    
+                    <div class="tab-pane fade show active" id="course-panel" role="tabpanel">
+                        <h5 class="mb-3 text-primary">新增單一課程資料 (all_course)</h5>
+                        <form id="course-form" class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">課程代碼 (ID) *</label>
+                                <input type="text" class="form-control" id="c-code" placeholder="如: 1141_0178" required>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">課程名稱 *</label>
+                                <input type="text" class="form-control" id="c-title" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">必選修</label>
+                                <select class="form-select" id="c-type">
+                                    <option value="必修">必修</option>
+                                    <option value="選修" selected>選修</option>
+                                    <option value="通識">通識</option>
+                                    <option value="跨校通識">跨校通識</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">進度 (%)</label>
+                                <input type="number" class="form-control" id="c-progress" value="0" min="0" max="100">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">授課教師</label>
+                                <input type="text" class="form-control" id="c-teacher">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">開課系所</label>
+                                <input type="text" class="form-control" id="c-dept">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">連結網址</label>
+                                <input type="text" class="form-control" id="c-link" value="#" placeholder="預設 #">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">課程圖片連結</label>
+                                <input type="text" class="form-control" id="c-image" placeholder="https://... 或 image/xxx.jpg">
+                                <div class="form-text">若無圖片，可使用假圖產生器：https://placehold.co/600x400/EEE/31343C?text=Course</div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">課程描述</label>
+                                <textarea class="form-control" id="c-desc" rows="2"></textarea>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i> 新增課程</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="announce-panel" role="tabpanel">
+                        <h5 class="mb-3 text-success">發布全站公告 (announcements)</h5>
+                        <form id="announce-form">
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <label class="form-label">公告標題 *</label>
+                                    <input type="text" class="form-control" id="a-title" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">標籤</label>
+                                    <select class="form-select" id="a-tag">
+                                        <option value="">(無)</option>
+                                        <option value="重要">重要 (紅色)</option>
+                                        <option value="置頂">置頂 (藍色)</option>
+                                        <option value="活動">活動</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">發布者</label>
+                                    <input type="text" class="form-control" id="a-author" value="系統管理員">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">日期</label>
+                                    <input type="date" class="form-control" id="a-date" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">公告內容</label>
+                                    <textarea class="form-control" id="a-content" rows="4" placeholder="請輸入詳細內容..."></textarea>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-success"><i class="bi bi-megaphone-fill"></i> 發布公告</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="batch-panel" role="tabpanel">
+                        <div class="alert alert-warning border-warning">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <strong>注意：</strong> 這些按鈕會快速寫入多筆資料。如果該課程代碼已存在，將會直接覆蓋。
+                        </div>
+                        
+                        <div class="d-grid gap-3 col-md-6 mx-auto mt-4">
+                            <button id="btn-batch-courses" class="btn btn-outline-dark btn-lg">
+                                <i class="bi bi-collection-fill me-2"></i> 一鍵匯入 6 門預設課程
+                            </button>
+                            <button id="btn-batch-announcements" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-card-text me-2"></i> 一鍵匯入 3 則範例公告
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+        // 設定檔
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6odCZUzRQVwlMv4Pnu55qGKwEFv2fzeo",
+            authDomain: "ntue-moodle-resedign.firebaseapp.com",
+            projectId: "ntue-moodle-resedign",
+            storageBucket: "ntue-moodle-resedign.firebasestorage.app",
+            messagingSenderId: "853184852200",
+            appId: "1:853184852200:web:1c1a78e7a20c1c3afa595d",
+            measurementId: "G-G0M5D0JNZG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // UI 元素
+        const logConsole = document.getElementById('log-console');
+        const courseForm = document.getElementById('course-form');
+        const announceForm = document.getElementById('announce-form');
+        
+        // 設定今天的日期為預設值
+        document.getElementById('a-date').valueAsDate = new Date();
+
+        // 紀錄小工具
+        function log(msg, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            let color = '#00ff00'; // success
+            if (type === 'error') color = '#ff4444';
+            if (type === 'warn') color = '#ffbb33';
+            
+            const div = document.createElement('div');
+            div.style.color = color;
+            div.innerText = `[${time}] ${msg}`;
+            logConsole.appendChild(div);
+            logConsole.scrollTop = logConsole.scrollHeight;
+        }
+
+        // ==========================================
+        // 功能 1: 新增單一課程
+        // ==========================================
+        courseForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = courseForm.querySelector('button');
+            btn.disabled = true;
+
+            const code = document.getElementById('c-code').value.trim();
+            const data = {
+                code: code,
+                title: document.getElementById('c-title').value.trim(),
+                type: document.getElementById('c-type').value,
+                department: document.getElementById('c-dept').value.trim(),
+                teacher: document.getElementById('c-teacher').value.trim(),
+                progress: parseInt(document.getElementById('c-progress').value) || 0,
+                description: document.getElementById('c-desc').value.trim(),
+                link: document.getElementById('c-link').value.trim() || '#',
+                image: document.getElementById('c-image').value.trim() || `https://placehold.co/600x400/EEE/31343C?text=${code}`
+            };
+
+            try {
+                // 使用 setDoc 並指定 code 為 ID
+                await setDoc(doc(db, "all_course", code), data);
+                log(`✅ 課程新增成功：${data.title} (${code})`);
+                courseForm.reset();
+            } catch (error) {
+                console.error(error);
+                log(`❌ 新增失敗：${error.message}`, 'error');
+            }
+            btn.disabled = false;
+        });
+
+        // ==========================================
+        // 功能 2: 新增全站公告
+        // ==========================================
+        announceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = announceForm.querySelector('button');
+            btn.disabled = true;
+
+            const data = {
+                title: document.getElementById('a-title').value.trim(),
+                content: document.getElementById('a-content').value.trim(),
+                date: document.getElementById('a-date').value,
+                tag: document.getElementById('a-tag').value,
+                author: document.getElementById('a-author').value.trim()
+            };
+
+            try {
+                // 使用 addDoc 自動生成 ID
+                await addDoc(collection(db, "announcements"), data);
+                log(`✅ 公告發布成功：${data.title}`);
+                // 只清空標題和內容，日期和作者保留方便連續輸入
+                document.getElementById('a-title').value = '';
+                document.getElementById('a-content').value = '';
+                document.getElementById('a-tag').value = '';
+            } catch (error) {
+                console.error(error);
+                log(`❌ 發布失敗：${error.message}`, 'error');
+            }
+            btn.disabled = false;
+        });
+
+        // ==========================================
+        // 功能 3: 批次匯入工具
+        // ==========================================
+        
+        // 匯入課程
+        document.getElementById('btn-batch-courses').addEventListener('click', async () => {
+             const coursesData = [
+                { code: "1141_0178", title: "元宇宙禪修", type: "選修", department: "歐伊系", teacher: "愷均", description: "探索靈界的未來與技術。", progress: 66, link: "course-1141_0178.html", image: "image/愷均.jpg" },
+                { code: "1141_6666", title: "美術館大探索", type: "必修", department: "加分加到系", teacher: "Rivers", description: "取得鑰匙者加6分！", progress: 75, link: "#", image: "image/李至軒.jpg" },
+                { code: "1141_0770", title: "前端工程設計", type: "選修", department: "數位科技設計系", teacher: "齊山", description: "電腦教室不能吃優格:L。", progress: 90, link: "#", image: "image/齊山.jpg" },
+                { code: "1141_4444", title: "沒有邏輯", type: "跨校通識", department: "哲學系", teacher: "我忘了", description: "台大的邏輯課", progress: 0, link: "#", image: "https://placehold.co/600x400/000000/ffffff?text=Logic :L" },
+                { code: "1141_0555", title: "爬山實戰", type: "通識", department: "文創系", teacher: "展立", description: "運動身體好", progress: 10, link: "#", image: "https://placehold.co/600x400/000000/ffffff?text=Mt. Climbing" },
+                { code: "1141_0999", title: "多媒體設計", type: "選修", department: "數位科技設計系", teacher: "Rivers", description: "為啥上Blender？朱如不要亂來", progress: 30, link: "#", image: "https://placehold.co/600x400/8B0000/ffffff?text=Why Blender?" }
+            ];
+
+            if(!confirm("確定要匯入 6 筆預設課程嗎？如果代碼重複將會覆蓋。")) return;
+
+            log('🚀 開始批次匯入課程...');
+            for (const c of coursesData) {
+                try {
+                    await setDoc(doc(db, "all_course", c.code), c);
+                    log(`  + 成功：${c.title}`);
+                } catch(e) { log(`  - 失敗：${e.message}`, 'error'); }
+            }
+            log('🏁 課程匯入完成！');
+        });
+
+        // 匯入公告
+        document.getElementById('btn-batch-announcements').addEventListener('click', async () => {
+             const announceData = [
+                { title: "【系統維護】本週五暫停服務", date: "2025-10-30", tag: "重要", author: "系統管理員", content: "為了提升服務品質，網站將於週五凌晨進行維護，請見諒。" },
+                { title: "114學年度選課須知", date: "2025-10-28", tag: "置頂", author: "教務處", content: "選課系統即將開放，請同學注意時間。" },
+                { title: "校園馬拉松報名開始", date: "2025-10-25", tag: "活動", author: "體育室", content: "歡迎全校師生踴躍報名參加。" }
+            ];
+
+            if(!confirm("確定要匯入 3 筆範例公告嗎？")) return;
+
+            log('🚀 開始批次匯入公告...');
+            for (const a of announceData) {
+                try {
+                    await addDoc(collection(db, "announcements"), a);
+                    log(`  + 成功：${a.title}`);
+                } catch(e) { log(`  - 失敗：${e.message}`, 'error'); }
+            }
+            log('🏁 公告匯入完成！');
+        });
+
+    </script>
+</body>
+</html>
