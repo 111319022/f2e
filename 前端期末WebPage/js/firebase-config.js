@@ -6,13 +6,13 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-
 
 //  Config
 const firebaseConfig = {
-  apiKey: "AIzaSyA6odCZUzRQVwlMv4Pnu55qGKwEFv2fzeo",
-  authDomain: "ntue-moodle-resedign.firebaseapp.com",
-  projectId: "ntue-moodle-resedign",
-  storageBucket: "ntue-moodle-resedign.firebasestorage.app",
-  messagingSenderId: "853184852200",
-  appId: "1:853184852200:web:1c1a78e7a20c1c3afa595d",
-  measurementId: "G-G0M5D0JNZG"
+  apiKey: "AIzaSyD0sF-1wbBv4qOOIBv8mr0IRnsipA0g8LE",
+  authDomain: "ntue-noodle-28d4a.firebaseapp.com",
+  projectId: "ntue-noodle-28d4a",
+  storageBucket: "ntue-noodle-28d4a.firebasestorage.app",
+  messagingSenderId: "126354872442",
+  appId: "1:126354872442:web:5ada63a322b96d2c4e43c3",
+  measurementId: "G-M8QRLCTRNB"
 };
 
 // 初始化一次

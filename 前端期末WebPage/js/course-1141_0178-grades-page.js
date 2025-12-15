@@ -23,8 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderGrades(querySnapshot);
             }, (error) => {
                 console.error("讀取成績失敗:", error);
-                // 通常是因為沒有建立複合索引 (Index)，F12 console 會有連結可以點
-                listContainer.innerHTML = `<tr><td colspan="4" class="text-center text-danger">讀取失敗 (請檢查 Console 是否需要建立索引)</td></tr>`;
+                listContainer.innerHTML = `<tr><td colspan="4" class="text-center text-danger">讀取失敗(瀏覽器config在搞)</td></tr>`;
             });
 
         } else {
