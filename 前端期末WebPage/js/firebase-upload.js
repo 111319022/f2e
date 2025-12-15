@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadPrompt = document.getElementById('drop-prompt'); 
     const statusBadge = document.querySelector('.badge.bg-danger'); 
     const remainingTime = document.querySelector('.list-group-item .text-danger');
+    const statusCardHeader = document.querySelector('.card.sticky-top .card-header');
 
     let selectedFile = null; 
 
@@ -118,7 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     if (remainingTime) {
                         remainingTime.className = "text-success fw-bold";
-                        remainingTime.textContent = "提早繳交：Safe!";
+                        remainingTime.textContent = "成功繳交！";
+                    }
+                    if (statusCardHeader) {
+                        statusCardHeader.classList.remove('bg-danger');
+                        statusCardHeader.classList.add('bg-success');
                     }
                 });
             }
