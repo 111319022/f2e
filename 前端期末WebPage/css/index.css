@@ -4,6 +4,11 @@
     border-right: 1px solid #dee2e6;
 }
 
+/* Index 深色模式的背景覆寫 */
+.page-index.dark-mode {
+    --bg-color: #2c2c2c;
+}
+
 /* 公告max height */
 .scrollable-list {
     max-height: 70vh;
