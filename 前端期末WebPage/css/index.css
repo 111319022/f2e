@@ -1,6 +1,6 @@
 /* 左側公告區背景色 */
 .announcement-section {
-    background-color: var(--bg-color, #f8f9fa);
+    background-color: #f8f9fa;
     border-right: 1px solid #dee2e6;
 }
 
@@ -8,16 +8,6 @@
 .scrollable-list {
     max-height: 70vh;
     overflow-y: auto;
-}
-
-/* 整體容器背景 */
-.container-fluid {
-    background-color: var(--bg-color, #ffffff);
-}
-
-/* 登入區域背景 */
-.login-section {
-    background-color: var(--bg-color, #ffffff);
 }
 
 /* 登入卡片 */
@@ -78,17 +68,9 @@
 }
 
 /* 深色模式細節 */
-.dark-mode .container-fluid {
-    background-color: var(--bg-color, #0f1720);
-}
-
 .dark-mode .announcement-section {
-    background-color: var(--bg-color, #0f1720);
+    background-color: var(--surface-color, #1e1e1e);
     border-color: var(--border-color, rgba(255, 255, 255, 0.1));
-}
-
-.dark-mode .login-section {
-    background-color: var(--bg-color, #0f1720);
 }
 
 .dark-mode .login-card {
@@ -136,11 +118,6 @@
         height: auto !important;
         overflow-y: auto !important;
         overflow-x: hidden;
-    }
-    
-    /* 確保容器背景色一致 */
-    .container-fluid {
-        background-color: var(--bg-color) !important;
     }
     
     /* 登入頁 - 手機版優化 */
