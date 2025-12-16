@@ -21,6 +21,28 @@
     text-align: center;
 }
 
+/* 主題切換浮動按鈕 */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background-color: var(--surface-color, #ffffff);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text-color, #212529);
+    z-index: 1100;
+}
+
+.theme-toggle i {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.theme-toggle .form-check-input {
+    cursor: pointer;
+}
+
 /* 公告列表項目優化 */
 .announcement-list-item {
     display: flex;
@@ -43,6 +65,23 @@
 
 .announcement-list-item .badge {
     flex-shrink: 0;
+}
+
+/* 深色模式細節 */
+.dark-mode .announcement-section {
+    background-color: var(--surface-color, #1e1e1e);
+    border-color: var(--border-color, rgba(255, 255, 255, 0.1));
+}
+
+.dark-mode .login-card {
+    box-shadow: 0 0.65rem 1.4rem rgba(0, 0, 0, 0.35);
+}
+
+.dark-mode .theme-toggle {
+    background-color: #1e1e1e;
+    border-color: var(--border-color, rgba(255, 255, 255, 0.1));
+    color: var(--text-color, #e6eef6);
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
 }
 
 /*RWDs*/
@@ -68,6 +107,12 @@
 
 /* ===== s-size (< 768px) - iPhone 16 Pro ===== */
 @media (max-width: 767.98px) {
+    .theme-toggle {
+        top: 0.75rem;
+        right: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+
     /* 修正登入頁無法滾動的問題 */
     body, html {
         height: auto !important;
@@ -182,17 +227,4 @@
     padding: 2rem;
     border-radius: 1rem;
     text-align: center;
-
-    /* 新增特效 */
-    background: rgba(255, 255, 255, 0.85); /* 半透明白 */
-    backdrop-filter: blur(10px); /* 毛玻璃效果 */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* 淡淡的邊框 */
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); /* 柔和陰影 */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 動畫過渡 */
-}
-
-/* 滑鼠移上去時的效果 */
-.login-card:hover {
-    transform: translateY(-5px); /* 浮 5px */
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25); /* 陰影加深 */
 }
