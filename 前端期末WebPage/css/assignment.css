@@ -51,8 +51,6 @@
     border-color: var(--border-color);
 }
 
-
-/* ===== 核心修正 ===== */
 /* 深色模式下，強制 bg-danger badge 使用 Bootstrap 的 danger 變數 */
 .dark-mode .badge.bg-danger {
     background-color: var(--bs-danger) !important;
