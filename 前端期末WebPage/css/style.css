@@ -207,34 +207,14 @@ body.dark-mode {
 /* --- 表單與按鈕 --- */
 .dark-mode .form-control,
 .dark-mode .form-select {
-    background-color: #2a3642 !important;
+    background-color: #0f1720 !important;
     color: #e6eef6 !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: var(--border-color) !important;
 }
 
 .dark-mode .form-control::placeholder,
 .dark-mode .form-select::placeholder {
     color: var(--muted-color) !important;
-}
-
-.dark-mode .form-control:focus,
-.dark-mode .form-select:focus {
-    background-color: #2a3642 !important;
-    color: #ffffff !important;
-    border-color: #9ec5ff !important;
-    box-shadow: 0 0 0 0.25rem rgba(158, 197, 255, 0.25);
-}
-
-.dark-mode .btn-primary {
-    background-color: #0d6efd !important;
-    border-color: #0d6efd !important;
-    color: #ffffff !important;
-}
-
-.dark-mode .btn-primary:hover,
-.dark-mode .btn-primary:focus {
-    background-color: #0b5ed7 !important;
-    border-color: #0a58ca !important;
 }
 
 .dark-mode .btn-outline-primary {
@@ -247,22 +227,6 @@ body.dark-mode {
     color: #0f1720 !important;
     background-color: #9ec5ff !important;
     border-color: #9ec5ff !important;
-}
-
-.dark-mode .btn-secondary {
-    background-color: #6c757d !important;
-    border-color: #6c757d !important;
-    color: #ffffff !important;
-}
-
-.dark-mode .btn-outline-secondary {
-    color: #adb5bd !important;
-    border-color: #6c757d !important;
-}
-
-.dark-mode .btn-outline-secondary:hover {
-    background-color: #6c757d !important;
-    color: #ffffff !important;
 }
 
 .dark-mode .btn-close {
