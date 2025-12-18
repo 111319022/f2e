@@ -28,7 +28,7 @@ main {
 
 .navbar-brand img {
     height: 40px;
-    margin-top: -2px; /* 讓圖示略往上，與文字居中對齊 */
+    margin-top: -2px; /* 圖略往上，與文字居中對齊 */
 }
 
 .navbar-brand span {
@@ -68,6 +68,23 @@ main {
 footer {
     padding-top: 2rem;
     padding-bottom: 2rem;
+}
+
+footer h6,
+footer p,
+footer small,
+footer a,
+footer .small,
+footer i {
+    color: #ffffff !important;
+}
+
+footer .text-muted {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+footer a:hover {
+    color: #9ec5ff !important;
 }
 
 /* ===== 回到頂部按鈕 ===== */
@@ -169,7 +186,7 @@ body.dark-mode {
     color: #9ec5ff !important;
 }
 
-/* --- 導覽列 (Navbar) --- */
+/* --- Navbar --- */
 .dark-mode .navbar {
     background-color: var(--surface-color) !important;
 }
@@ -196,7 +213,7 @@ body.dark-mode {
     filter: invert(1) brightness(1.2);
 }
 
-/* --- 卡片 (Card) --- */
+/* --- 卡片 --- */
 .dark-mode .card {
     background-color: var(--surface-color) !important;
     border-color: var(--border-color) !important;
@@ -246,7 +263,7 @@ body.dark-mode {
     color: #0f1720;
 }
 
-/* --- 表格 (Table) --- */
+/* --- 表格 --- */
 .dark-mode .table {
     color: var(--text-color) !important;
     --bs-table-bg: transparent;
