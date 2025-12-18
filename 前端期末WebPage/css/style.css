@@ -180,8 +180,8 @@ body.dark-mode {
     color: #ffffff !important;
 }
 
-.dark-mode .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.25) !important;
+.navbar-toggler {
+     border: none !important;
 }
 
 .dark-mode .navbar-toggler-icon {
