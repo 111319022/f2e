@@ -29,12 +29,13 @@
 /* 歡迎文字動態效果 */
 .welcome-title {
     display: inline-block;
-    background: linear-gradient(120deg, #1b5cff, #3a7bfd, #9ec5ff, #3a7bfd, #1b5cff);
+    background: linear-gradient(120deg, #6ea8fe, #9ec5ff, #6ea8fe);
     background-size: 200% auto;
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
     animation: welcome-shimmer 3s ease-in-out infinite;
-    text-shadow: 0 0 14px rgba(58, 123, 253, 0.5);
+    text-shadow: 0 0 12px rgba(110, 168, 254, 0.35);
 }
 
 @keyframes welcome-shimmer {
