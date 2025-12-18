@@ -364,13 +364,29 @@ body.dark-mode {
     color: var(--bs-primary);
 }
 
-/* 主題切換在導覽列中的樣式 */
-.theme-toggle-nav {
-    padding: 0.5rem 0.75rem;
+/* 主題切換在導覽列頂部的樣式 */
+.theme-toggle-top {
+    display: flex;
+    align-items: center;
 }
 
-.theme-toggle-nav i {
+.theme-toggle-top i {
     font-size: 1rem;
+}
+
+/* 手機版：縮小間距 */
+@media (max-width: 991.98px) {
+    .theme-toggle-top {
+        margin-right: 0.5rem !important;
+    }
+    
+    .theme-toggle-top i {
+        font-size: 0.9rem;
+    }
+    
+    .theme-toggle-top .form-switch {
+        margin: 0 0.25rem !important;
+    }
 }
 
 /* =========================================
@@ -421,18 +437,6 @@ body.dark-mode {
     
     .navbar-nav .nav-link {
         padding: 0.5rem 0;
-    }
-    
-    /* 主題切換在手機版的樣式 */
-    .theme-toggle-nav {
-        justify-content: center;
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        margin-bottom: 0.25rem;
-    }
-    
-    .dark-mode .theme-toggle-nav {
-        border-bottom-color: rgba(255, 255, 255, 0.1);
     }
     
     /* Hero Section 手機版 */
