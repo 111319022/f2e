@@ -200,7 +200,7 @@
                     </p>
                     <p class="small text-muted">
                         <i class="bi bi-calendar-check me-1"></i>
-                        最後更新：2025/12/18
+                        最後更新：2025/12/22
                     </p>
                 </div>
                 
@@ -333,22 +333,25 @@
            welcomeElement.classList.add('typing-active'); // 顯示元素
            
            let index = 0;
-           const typingSpeed = 100;
+           const typingSpeed = 80;
            
            function typeWriter() {
                if (index < fullText.length) {
                    welcomeElement.textContent += fullText.charAt(index);
                    index++;
-                   setTimeout(typeWriter, typingSpeed);
+                   const randomSpeed = typingSpeed + Math.random() * 30 - 15;
+                   setTimeout(typeWriter, randomSpeed);
                } else {
                    welcomeElement.classList.add('typing-done');
-                   if (subtitle) {
-                       subtitle.classList.add('show');
-                   }
+                   setTimeout(() => {
+                       if (subtitle) {
+                           subtitle.classList.add('show');
+                       }
+                   }, 300);
                }
            }
            
-           setTimeout(typeWriter, 100);
+           setTimeout(typeWriter, 200);
        }
    </script>
 </body>
