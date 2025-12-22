@@ -1,13 +1,104 @@
-import { collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { db } from "./firebase-config.js";
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { db, auth } from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const listContainer = document.getElementById('course-announcement-list');
+    const addButton = document.getElementById('add-announcement-btn');
+    const addModalEl = document.getElementById('addAnnouncementModal');
+    const addForm = document.getElementById('new-announcement-form');
+    const titleInput = document.getElementById('ann-title-input');
+    const tagInput = document.getElementById('ann-tag-input');
+    const contentInput = document.getElementById('ann-content-input');
+    const submitBtn = document.getElementById('ann-submit-btn');
+    const helperText = document.getElementById('announce-form-helper');
     
     const detailModalEl = document.getElementById('announceDetailModal');
     let detailModal = null;
     if (detailModalEl && window.bootstrap) {
         detailModal = new bootstrap.Modal(detailModalEl);
+    }
+
+    let addModal = null;
+    if (addModalEl && window.bootstrap) {
+        addModal = new bootstrap.Modal(addModalEl);
+    }
+
+    const toggleSubmitState = (isSubmitting) => {
+        if (!submitBtn) return;
+        const spinner = submitBtn.querySelector('.spinner-border');
+        const defaultText = submitBtn.querySelector('.default-text');
+        submitBtn.disabled = isSubmitting;
+        if (spinner) spinner.classList.toggle('d-none', !isSubmitting);
+        if (defaultText) defaultText.classList.toggle('d-none', isSubmitting);
+    };
+
+    const resetForm = () => {
+        if (addForm) addForm.reset();
+        toggleSubmitState(false);
+    };
+
+    if (addButton) {
+        addButton.addEventListener('click', () => {
+            if (!auth.currentUser) {
+                alert('請先登入才能新增公告');
+                return;
+            }
+
+            resetForm();
+
+            if (helperText) {
+                const name = auth.currentUser.displayName || '匿名';
+                helperText.textContent = `將以 ${name} 身份發布公告`;
+            }
+
+            if (addModal) addModal.show();
+        });
+    }
+
+    if (addForm) {
+        addForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!auth.currentUser) {
+                alert('請先登入才能新增公告');
+                return;
+            }
+
+            const title = titleInput?.value.trim() || '';
+            const content = contentInput?.value.trim() || '';
+            const tag = tagInput?.value || '';
+
+            if (!title || !content) {
+                alert('請填寫標題與內容');
+                return;
+            }
+
+            toggleSubmitState(true);
+
+            const dateStr = new Date().toLocaleString('zh-TW', {
+                hour12: false,
+                timeZone: 'Asia/Taipei'
+            });
+
+            try {
+                await addDoc(collection(db, "course_announcement-1141_0178"), {
+                    title,
+                    content,
+                    tag: tag || null,
+                    author: auth.currentUser.displayName || '匿名',
+                    date: dateStr,
+                    createdAt: serverTimestamp(),
+                });
+
+                resetForm();
+                if (addModal) addModal.hide();
+            } catch (error) {
+                console.error('新增公告失敗', error);
+                alert('新增公告失敗：' + error.message);
+            } finally {
+                toggleSubmitState(false);
+            }
+        });
     }
 
     if (!listContainer) return;

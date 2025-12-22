@@ -67,7 +67,7 @@
             <div class="col-lg-8">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="display-6 fw-bold">課程公告</h1>
-                    <button class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-lg"></i> 新增公告</button>
+                    <button class="btn btn-primary" id="add-announcement-btn"><i class="bi bi-plus-lg me-1"></i>新增公告</button>
                 </div>
 
                 <div id="course-announcement-list" class="list-group">
@@ -175,6 +175,43 @@
     </footer>
 
     <a id="back-to-top-btn" href="#top" aria-label="Back to top">↑</a>
+
+    <div class="modal fade" id="addAnnouncementModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form class="modal-content" id="new-announcement-form">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold">新增公告</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="ann-title-input" class="form-label">標題</label>
+                        <input type="text" class="form-control" id="ann-title-input" placeholder="輸入公告標題" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ann-tag-input" class="form-label">標籤</label>
+                        <select class="form-select" id="ann-tag-input">
+                            <option value="">無</option>
+                            <option value="重要">重要</option>
+                            <option value="置頂">置頂</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ann-content-input" class="form-label">內容</label>
+                        <textarea class="form-control" id="ann-content-input" rows="4" placeholder="輸入公告內容" required></textarea>
+                    </div>
+                    <p class="text-muted small mb-0" id="announce-form-helper">將以目前登入身份發布公告</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary" id="ann-submit-btn">
+                        <span class="default-text"><i class="bi bi-send-fill me-1"></i>發布</span>
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div class="modal fade" id="announceDetailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
