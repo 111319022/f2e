@@ -210,12 +210,6 @@ footer a:hover {
     }
 }
 
-.hero-section h1::after {
-}
-
-.hero-section h1.typing-done::after {
-}
-
 /* 課程圖片比例 */
 #my-courses .card-img-top {
     height: 180px; 
