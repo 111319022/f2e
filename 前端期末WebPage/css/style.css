@@ -43,6 +43,36 @@ main {
     color: var(--bs-primary);
 }
 
+/* 移除所有點擊/焦點時的藍色框框 */
+* {
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+*:focus,
+*:active,
+*:focus-visible,
+.dropdown-toggle:focus,
+.dropdown-toggle:active,
+.nav-link:focus,
+.nav-link:active,
+.dropdown-item:focus,
+.dropdown-item:active,
+.dropdown-menu:focus,
+button:focus,
+button:active,
+.btn:focus,
+.btn:active,
+a:focus,
+a:active,
+input:focus,
+input:active,
+.form-control:focus,
+.form-control:active {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
 /* ===== 課程卡片樣式 ===== */
 .card {
     border: 1px solid #e0e0e0;
