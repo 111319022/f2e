@@ -140,6 +140,8 @@ main {
 footer {
     padding-top: 2rem;
     padding-bottom: 2rem;
+    position: relative;
+    z-index: 20; /* 確保 footer 在 sticky card 上面 */
 }
 
 footer h6,
