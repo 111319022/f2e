@@ -673,4 +673,10 @@ body.dark-mode {
     .table td {
         padding: 0.5rem 0.25rem;
     }
+    
+    /* 手機版禁用 sticky card，避免覆蓋 footer */
+    .card.sticky-top {
+        position: static !important;
+        margin-bottom: 2rem;
+    }
 }

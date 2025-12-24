@@ -71,7 +71,7 @@
 .card.sticky-top {
     border-radius: .5rem;
     border: 1px solid #dee2e6;
-    z-index: 10; /* 設置較低的 z-index 避免覆蓋 footer */
+    z-index: 10;
 }
 
 .card.sticky-top .card-header {
