@@ -43,7 +43,7 @@ main {
     color: var(--bs-primary);
 }
 
-/* 移除所有點擊/焦點時的藍色框框 */
+/* 移除所有點擊時的藍色框框 */
 * {
     -webkit-tap-highlight-color: transparent !important;
 }
@@ -568,6 +568,11 @@ body.dark-mode {
         padding: 3rem 1.5rem;
         margin-bottom: 2.5rem;
     }
+    
+    /* Footer 增加上方空間 */
+    footer {
+        margin-top: 2rem;
+    }
 }
 
 /* ===== Mobile (< 768px) - 以 iPhone 16 Pro (393x852px) 為準 ===== */
@@ -648,6 +653,7 @@ body.dark-mode {
     /* Footer 手機版 */
     footer {
         padding: 1.5rem 0;
+        margin-top: 3rem;
         font-size: 0.85rem;
     }
     
