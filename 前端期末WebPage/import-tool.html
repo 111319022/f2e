@@ -312,12 +312,85 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="batch-tab" data-bs-toggle="tab" data-bs-target="#batch-panel" type="button" role="tab" style="color: #ff4444;">[03] 批次指令</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="manage-tab" data-bs-toggle="tab" data-bs-target="#manage-panel" type="button" role="tab" style="color: var(--terminal-green);">
+                            [04] 公告管理
+                        </button>
+                    </li>
                 </ul>
             </div>
             
             <div class="card-body p-4">
                 <div class="tab-content" id="adminTabsContent">
-                    
+                    <div class="tab-pane fade" id="manage-panel" role="tabpanel">
+    <div class="row mb-3">
+        <div class="col-12 border-bottom border-dark pb-2 mb-3">
+            <h5 class="m-0 text-white"><i class="bi bi-list-check"></i> 管理現有公告</h5>
+            <small class="text-secondary font-monospace">TARGET: collection(announcements) | REAL-TIME</small>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover table-sm font-monospace small align-middle" style="border-color: #333;">
+            <thead>
+                <tr class="text-secondary">
+                    <th style="width: 120px;">日期</th>
+                    <th style="width: 80px;">標籤</th>
+                    <th>標題</th>
+                    <th style="width: 100px;">發布者</th>
+                    <th class="text-end" style="width: 150px;">操作</th>
+                </tr>
+            </thead>
+            <tbody id="announce-list-body">
+                <tr><td colspan="5" class="text-center text-muted">正在連線至資料庫...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: var(--panel-bg); border: 1px solid var(--accent-color);">
+                <div class="modal-header border-secondary py-2">
+                    <h6 class="modal-title text-white font-monospace">EDIT_ANNOUNCEMENT // 編輯模式</h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <input type="hidden" id="edit-id"> <div class="mb-3">
+                            <label class="form-label">標題</label>
+                            <input type="text" class="form-control" id="edit-title" required>
+                        </div>
+                        <div class="row g-2 mb-3">
+                             <div class="col-6">
+                                <label class="form-label">日期</label>
+                                <input type="date" class="form-control" id="edit-date" required>
+                             </div>
+                             <div class="col-6">
+                                <label class="form-label">標籤</label>
+                                <select class="form-select" id="edit-tag">
+                                    <option value="">無</option>
+                                    <option value="重要">重要</option>
+                                    <option value="置頂">置頂</option>
+                                    <option value="活動">活動</option>
+                                </select>
+                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">內容</label>
+                            <textarea class="form-control" id="edit-content" rows="4"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-secondary py-1">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="btn-save-edit">
+                        <i class="bi bi-save"></i> 儲存變更
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                     <div class="tab-pane fade show active" id="course-panel" role="tabpanel">
                         <div class="row mb-3">
                             <div class="col-12 border-bottom border-dark pb-2 mb-3">
@@ -541,177 +614,280 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    
+    import { getFirestore, collection, doc, setDoc, addDoc, deleteDoc, updateDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-          apiKey: "AIzaSyD0sF-1wbBv4qOOIBv8mr0IRnsipA0g8LE",
-          authDomain: "ntue-noodle-28d4a.firebaseapp.com",
-          projectId: "ntue-noodle-28d4a",
-          storageBucket: "ntue-noodle-28d4a.firebasestorage.app",
-          messagingSenderId: "126354872442",
-          appId: "1:126354872442:web:5ada63a322b96d2c4e43c3",
-          measurementId: "G-M8QRLCTRNB"
-        };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0sF-1wbBv4qOOIBv8mr0IRnsipA0g8LE",
+      authDomain: "ntue-noodle-28d4a.firebaseapp.com",
+      projectId: "ntue-noodle-28d4a",
+      storageBucket: "ntue-noodle-28d4a.firebasestorage.app",
+      messagingSenderId: "126354872442",
+      appId: "1:126354872442:web:5ada63a322b96d2c4e43c3",
+      measurementId: "G-M8QRLCTRNB"
+    };
 
-        const logConsole = document.getElementById('log-console');
-        const courseForm = document.getElementById('course-form');
-        const announceForm = document.getElementById('announce-form');
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const logConsole = document.getElementById('log-console');
+    const courseForm = document.getElementById('course-form');
+    const announceForm = document.getElementById('announce-form');
+    
+    // 初始化日期欄位
+    document.getElementById('a-date').valueAsDate = new Date();
+
+    // Log 函式維持不變
+    function log(msg, type = 'info') {
+        const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+        let color = '#33ff00'; 
+        let prefix = "INFO";
+        if (type === 'error') { color = '#ff3333'; prefix = "ERR"; }
+        if (type === 'warn') { color = '#ffcc00'; prefix = "WARN"; }
+        const div = document.createElement('div');
+        div.style.color = color;
+        div.innerText = `[${time}] <${prefix}> ${msg}`;
+        logConsole.appendChild(div);
+        logConsole.scrollTop = logConsole.scrollHeight;
+    }
+
+    // ---  功能 4: 公告管理  ---
+    const listBody = document.getElementById('announce-list-body');
+    // 使用 Bootstrap Modal API
+    const editModalEl = document.getElementById('editModal');
+    let editModalInstance = null;
+    if (window.bootstrap) {
+        editModalInstance = new bootstrap.Modal(editModalEl);
+    }
+
+    // 啟動即時更新，變動會自動刷新列表
+    const q = query(collection(db, "announcements"), orderBy("date", "desc"));
+    
+    onSnapshot(q, (snapshot) => {
+        listBody.innerHTML = ''; 
         
-        document.getElementById('a-date').valueAsDate = new Date();
-
-        function log(msg, type = 'info') {
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-            let color = '#33ff00'; 
-            let prefix = "INFO";
-
-            if (type === 'error') { color = '#ff3333'; prefix = "ERR"; }
-            if (type === 'warn') { color = '#ffcc00'; prefix = "WARN"; }
-            
-            const div = document.createElement('div');
-            div.style.color = color;
-            // 中文化 Log 格式
-            div.innerText = `[${time}] <${prefix}> ${msg}`;
-            logConsole.appendChild(div);
-            logConsole.scrollTop = logConsole.scrollHeight;
+        if (snapshot.empty) {
+            listBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">目前沒有公告資料</td></tr>';
+            return;
         }
 
-        // --- Tab 1: 單一課程 ---
-        courseForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = courseForm.querySelector('button');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> 處理中 (PROCESSING)...';
-
-            const code = document.getElementById('c-code').value.trim();
-            const data = {
-                code: code,
-                title: document.getElementById('c-title').value.trim(),
-                type: document.getElementById('c-type').value,
-                department: document.getElementById('c-dept').value.trim(),
-                teacher: document.getElementById('c-teacher').value.trim(),
-                progress: parseInt(document.getElementById('c-progress').value) || 0,
-                description: document.getElementById('c-desc').value.trim(),
-                link: document.getElementById('c-link').value.trim() || '#',
-                image: document.getElementById('c-image').value.trim() || `https://placehold.co/600x400/EEE/31343C?text=${code}`
-            };
-
-            try {
-                await setDoc(doc(db, "all_course", code), data);
-                log(`課程已新增: ${data.title} (${code})`);
-                courseForm.reset();
-            } catch (error) {
-                console.error(error);
-                log(`寫入失敗: ${error.message}`, 'error');
-            }
-            btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-upload"></i> 執行新增 (EXECUTE)';
-        });
-
-        // --- Tab 2: 單一公告 ---
-        announceForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = announceForm.querySelector('button');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> 傳送中 (SENDING)...';
-
-            const data = {
-                title: document.getElementById('a-title').value.trim(),
-                content: document.getElementById('a-content').value.trim(),
-                date: document.getElementById('a-date').value,
-                tag: document.getElementById('a-tag').value,
-                author: document.getElementById('a-author').value.trim()
-            };
-
-            try {
-                await addDoc(collection(db, "announcements"), data);
-                log(`公告已發送: ${data.title}`);
-                document.getElementById('a-title').value = '';
-                document.getElementById('a-content').value = '';
-                document.getElementById('a-tag').value = '';
-            } catch (error) {
-                console.error(error);
-                log(`發送失敗: ${error.message}`, 'error');
-            }
-            btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-send-fill"></i> 發送公告 (TRANSMIT)';
-        });
-
-        // Tab 3: JSON 批次匯入指令
-        const batchInput = document.getElementById('batch-json-input');
-
-        document.getElementById('btn-copy-course-json').addEventListener('click', () => {
-            const example = document.getElementById('example-course-json').innerText.trim();
-            batchInput.value = example;
-            document.getElementById('batch-target').value = 'all_course';
-            log('範例已載入: 課程結構', 'warn');
-        });
-
-        document.getElementById('btn-copy-announce-json').addEventListener('click', () => {
-            const example = document.getElementById('example-announce-json').innerText.trim();
-            batchInput.value = example;
-            document.getElementById('batch-target').value = 'announcements';
-            log('範例已載入: 公告結構', 'warn');
-        });
-
-        document.getElementById('btn-run-batch').addEventListener('click', async () => {
-            const rawJson = batchInput.value.trim();
-            const targetCollection = document.getElementById('batch-target').value;
-            const btn = document.getElementById('btn-run-batch');
+        snapshot.forEach((docSnapshot) => {
+            const data = docSnapshot.data();
+            const id = docSnapshot.id;
             
-            if (!rawJson) {
-                log('錯誤: 內容為空 (EMPTY)', 'error');
-                return;
-            }
+            const tr = document.createElement('tr');
+            
+            // 處理標籤顏色
+            let badgeClass = 'bg-secondary text-dark';
+            if(data.tag === '重要') badgeClass = 'bg-danger text-white';
+            if(data.tag === '置頂') badgeClass = 'bg-primary text-white';
+            if(data.tag === '活動') badgeClass = 'bg-success text-white';
 
-            let dataArray;
-            try {
-                dataArray = JSON.parse(rawJson);
-            } catch (e) {
-                log(`語法錯誤 (SYNTAX): ${e.message}`, 'error');
-                return;
-            }
+            tr.innerHTML = `
+                <td class="text-secondary">${data.date}</td>
+                <td><span class="badge ${badgeClass} rounded-0" style="font-weight:normal;">${data.tag || '-'}</span></td>
+                <td class="text-white">${data.title}</td>
+                <td class="text-secondary small">${data.author || 'ADMIN'}</td>
+                <td class="text-end">
+                    <button class="btn btn-outline-info btn-sm py-0 px-2 btn-edit me-1" style="font-size:0.75rem;">編輯</button>
+                    <button class="btn btn-outline-danger btn-sm py-0 px-2 btn-delete" style="font-size:0.75rem;">刪除</button>
+                </td>
+            `;
 
-            if (!Array.isArray(dataArray)) {
-                log('格式錯誤: 必須是陣列 [...]', 'error');
-                return;
-            }
-
-            if (!confirm(`確認：是否將 ${dataArray.length} 筆資料寫入 [${targetCollection}]？`)) return;
-
-            btn.disabled = true;
-            log(`批次作業開始: 共 ${dataArray.length} 筆...`);
-
-            let successCount = 0;
-            let failCount = 0;
-
-            for (const item of dataArray) {
-                try {
-                    if (targetCollection === 'all_course') {
-                        if (!item.code) throw new Error("缺少 'code' 欄位");
-                        await setDoc(doc(db, "all_course", item.code), item);
-                        log(`  + 成功: ${item.title || item.code}`);
-                    
-                    } else if (targetCollection === 'announcements') {
-                        if (!item.title) throw new Error("缺少 'title' 欄位");
-                        await addDoc(collection(db, "announcements"), item);
-                        log(`  + 成功: ${item.title}`);
+            // 綁定刪除按鈕
+            tr.querySelector('.btn-delete').addEventListener('click', async () => {
+                if(confirm(`警告：確定要永久刪除此公告嗎？\n\n標題：${data.title}`)) {
+                    try {
+                        await deleteDoc(doc(db, "announcements", id));
+                        log(`公告已刪除: ${id}`, 'warn');
+                    } catch (err) {
+                        log(`刪除失敗: ${err.message}`, 'error');
                     }
-                    successCount++;
-                } catch (error) {
-                    failCount++;
-                    log(`  - 失敗: ${error.message}`, 'error');
-                    console.error(item, error);
                 }
-            }
+            });
 
-            log(`作業完成。成功:${successCount} / 失敗:${failCount}`, 'warn');
-            btn.disabled = false;
+            // 綁定編輯按鈕
+            tr.querySelector('.btn-edit').addEventListener('click', () => {
+                // 填入資料到 Modal
+                document.getElementById('edit-id').value = id;
+                document.getElementById('edit-title').value = data.title;
+                document.getElementById('edit-date').value = data.date;
+                document.getElementById('edit-tag').value = data.tag || '';
+                document.getElementById('edit-content').value = data.content || '';
+                
+                editModalInstance.show(); // 開啟視窗
+            });
+
+            listBody.appendChild(tr);
         });
+    });
 
-    </script>
+    // 綁定 Modal 中的「儲存變更」按鈕
+    document.getElementById('btn-save-edit').addEventListener('click', async () => {
+        const id = document.getElementById('edit-id').value;
+        const btn = document.getElementById('btn-save-edit');
+        
+        btn.disabled = true;
+        btn.innerText = '儲存中...';
+
+        const updatedData = {
+            title: document.getElementById('edit-title').value.trim(),
+            date: document.getElementById('edit-date').value,
+            tag: document.getElementById('edit-tag').value,
+            content: document.getElementById('edit-content').value.trim()
+        };
+
+        try {
+            await updateDoc(doc(db, "announcements", id), updatedData);
+            log(`公告已更新: ${updatedData.title}`, 'info');
+            editModalInstance.hide();
+        } catch (err) {
+            console.error(err);
+            log(`更新失敗: ${err.message}`, 'error');
+            alert('更新失敗，請查看 Log');
+        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-save"></i> 儲存變更';
+    });
+
+
+    
+    // Tab 1: 單一課程
+    courseForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = courseForm.querySelector('button');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bi bi-hourglass-split"></i> 處理中...';
+
+        const code = document.getElementById('c-code').value.trim();
+        const data = {
+            code: code,
+            title: document.getElementById('c-title').value.trim(),
+            type: document.getElementById('c-type').value,
+            department: document.getElementById('c-dept').value.trim(),
+            teacher: document.getElementById('c-teacher').value.trim(),
+            progress: parseInt(document.getElementById('c-progress').value) || 0,
+            description: document.getElementById('c-desc').value.trim(),
+            link: document.getElementById('c-link').value.trim() || '#',
+            image: document.getElementById('c-image').value.trim() || `https://placehold.co/600x400/EEE/31343C?text=${code}`
+        };
+
+        try {
+            await setDoc(doc(db, "all_course", code), data);
+            log(`課程已新增: ${data.title} (${code})`);
+            courseForm.reset();
+        } catch (error) {
+            console.error(error);
+            log(`寫入失敗: ${error.message}`, 'error');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-upload"></i> 執行新增';
+    });
+
+    // Tab 2: 單一公告
+    announceForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = announceForm.querySelector('button');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bi bi-hourglass-split"></i> 傳送中...';
+
+        const data = {
+            title: document.getElementById('a-title').value.trim(),
+            content: document.getElementById('a-content').value.trim(),
+            date: document.getElementById('a-date').value,
+            tag: document.getElementById('a-tag').value,
+            author: document.getElementById('a-author').value.trim()
+        };
+
+        try {
+            await addDoc(collection(db, "announcements"), data);
+            log(`公告已發送: ${data.title}`);
+            document.getElementById('a-title').value = '';
+            document.getElementById('a-content').value = '';
+            // document.getElementById('a-tag').value = ''; // 保留標籤方便連續輸入
+        } catch (error) {
+            console.error(error);
+            log(`發送失敗: ${error.message}`, 'error');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-send-fill"></i> 發送公告';
+    });
+
+    // Tab 3: JSON 批次
+    const batchInput = document.getElementById('batch-json-input');
+
+    document.getElementById('btn-copy-course-json').addEventListener('click', () => {
+        const example = document.getElementById('example-course-json').innerText.trim();
+        batchInput.value = example;
+        document.getElementById('batch-target').value = 'all_course';
+        log('範例已載入: 課程結構', 'warn');
+    });
+
+    document.getElementById('btn-copy-announce-json').addEventListener('click', () => {
+        const example = document.getElementById('example-announce-json').innerText.trim();
+        batchInput.value = example;
+        document.getElementById('batch-target').value = 'announcements';
+        log('範例已載入: 公告結構', 'warn');
+    });
+
+    document.getElementById('btn-run-batch').addEventListener('click', async () => {
+        const rawJson = batchInput.value.trim();
+        const targetCollection = document.getElementById('batch-target').value;
+        const btn = document.getElementById('btn-run-batch');
+        
+        if (!rawJson) {
+            log('錯誤: 內容為空 (EMPTY)', 'error');
+            return;
+        }
+
+        let dataArray;
+        try {
+            dataArray = JSON.parse(rawJson);
+        } catch (e) {
+            log(`語法錯誤 (SYNTAX): ${e.message}`, 'error');
+            return;
+        }
+
+        if (!Array.isArray(dataArray)) {
+            log('格式錯誤: 必須是陣列 [...]', 'error');
+            return;
+        }
+
+        if (!confirm(`確認：是否將 ${dataArray.length} 筆資料寫入 [${targetCollection}]？`)) return;
+
+        btn.disabled = true;
+        log(`批次作業開始: 共 ${dataArray.length} 筆...`);
+
+        let successCount = 0;
+        let failCount = 0;
+
+        for (const item of dataArray) {
+            try {
+                if (targetCollection === 'all_course') {
+                    if (!item.code) throw new Error("缺少 'code' 欄位");
+                    await setDoc(doc(db, "all_course", item.code), item);
+                    log(`  + 成功: ${item.title || item.code}`);
+                
+                } else if (targetCollection === 'announcements') {
+                    if (!item.title) throw new Error("缺少 'title' 欄位");
+                    await addDoc(collection(db, "announcements"), item);
+                    log(`  + 成功: ${item.title}`);
+                }
+                successCount++;
+            } catch (error) {
+                failCount++;
+                log(`  - 失敗: ${error.message}`, 'error');
+                console.error(item, error);
+            }
+        }
+
+        log(`作業完成。成功:${successCount} / 失敗:${failCount}`, 'warn');
+        btn.disabled = false;
+    });
+
+</script>
 </body>
 </html>

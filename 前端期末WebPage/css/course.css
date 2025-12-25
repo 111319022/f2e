@@ -160,9 +160,10 @@
 
     transform: none !important;
 }
+/* 深色模式下的藍色卡片要維持藍色 */
 .dark-mode .card.bg-primary,
 .dark-mode .card.bg-primary:hover {
-    background-color: var(--bs-primary) !important; /* 保持藍色 */
+    background-color: var(--bs-primary) !important; 
     color: #fff !important;
     border-color: var(--bs-primary) !important;
     box-shadow: none !important;
