@@ -119,57 +119,12 @@
                 <a href="all-course.html" class="btn btn-sm btn-outline-secondary">查看所有課程 <i class="bi bi-arrow-right"></i></a>
             </div>
             
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="image/愷均.jpg" class="card-img-top" alt="元宇宙概論課程圖片">
-                        <div class="card-body">
-                            <h5 class="card-title">1141_0170_元宇宙禪修(點這個！)</h5>
-                            <p class="card-text text-muted">探索靈界的未來與技術。</p>
-                            <div class="progress" role="progressbar" aria-label="課程進度" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                <div class="progress-bar" style="width: 75%"></div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0 text-end">
-                            <a href="course-1141_0178.html" class="btn btn-primary">進入課程</a>
-                        </div>
-                    </div>
+            <div id="my-courses-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2 text-muted">正在載入課程...</p>
                 </div>
-
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="image/李至軒.jpg" class="card-img-top" alt="多媒體設計課程圖片">
-                        <div class="card-body">
-                            <h5 class="card-title">1141_6666_美術館大探索</h5>
-                            <p class="card-text text-muted">取得鑰匙者加6分！</p>
-                            <div class="progress" role="progressbar" aria-label="課程進度" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                <div class="progress-bar" style="width: 50%"></div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0 text-end">
-                             <a href="#" class="btn btn-primary">進入課程</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="image/齊山.jpg" class="card-img-top" alt="前端工程設計課程圖片">
-                        <div class="card-body">
-                            <h5 class="card-title">1141_0770_前端工程設計</h5>
-                            <p class="card-text text-muted">電腦教室不能吃優格:L</p>
-                             <div class="progress" role="progressbar" aria-label="課程進度" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                <div class="progress-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-white border-0 text-end">
-                             <a href="#" class="btn btn-primary">進入課程</a>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
+            </div>
         </section>
 
         <section id="announcements" class="mt-5">
@@ -288,6 +243,7 @@
 
    <script src="js/main.js"></script>
    <script type="module" src="js/firebase-announcement.js"></script>
+   <script type="module" src="js/firebase-dashboard.js"></script>
    
    <script>
        // 打字機效果
