@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="css/course.css">
     <link rel="icon" href="image/noodle-favicon-new.png" type="image/png">
     <link rel="shortcut icon" href="image/noodle-favicon-new.png" type="image/png">
+    <style>
+        /* 避免分數在滑鼠移動或拖曳時被反白選取 */
+        .no-select { user-select: none; -webkit-user-select: none; }
+        /* 確保深色卡片在 hover 時不改變背景/文字顏色 */
+        .card.bg-primary:hover {
+            background-color: var(--bs-primary) !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -87,7 +96,7 @@
                 <div class="card mb-4 bg-primary text-white border"
                     style="transform: none !important; transition: none !important; box-shadow: none !important;">
                     <div class="card-body text-center p-4">
-                        <h2 class="display-1 fw-bold" id="total-score-display">--</h2>
+                        <h2 class="display-1 fw-bold no-select" id="total-score-display">--</h2>
                         <p class="fs-5">目前預估總成績</p>
                     </div>
                 </div>
