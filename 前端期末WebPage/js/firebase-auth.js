@@ -2,8 +2,9 @@
 
 // 1. 引入 Firebase
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { auth, db } from "./firebase-config.js"; // 共用 config 初始化的 auth
+import { doc, getDoc, setDoc, updateDoc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { ref, onValue, onDisconnect, set } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+import { auth, db, rtdb } from "./firebase-config.js"; // 共用 config 初始化的 auth
 const provider = new GoogleAuthProvider();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -99,10 +100,34 @@ function updateNavbarUI(user) {
         const newLogoutBtn = logoutBtn.cloneNode(true);
         logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
         
-        newLogoutBtn.addEventListener('click', (e) => {
+        newLogoutBtn.addEventListener('click', async (e) => {
             e.preventDefault();
+            
+            // 登出前先將狀態設為離線
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = doc(db, "users-1141_0178", user.uid);
+                const userStatusDatabaseRef = ref(rtdb, `/status/${user.uid}`);
+                
+                try {
+                    // 同時更新 Firestore 和 Realtime Database
+                    await Promise.all([
+                        updateDoc(userRef, { 
+                            status: 'offline',
+                            updatedAt: serverTimestamp()
+                        }),
+                        set(userStatusDatabaseRef, {
+                            state: 'offline',
+                            last_changed: new Date().getTime()
+                        })
+                    ]);
+                } catch (error) {
+                    console.error("更新離線狀態失敗:", error);
+                }
+            }
+            
+            // 執行登出
             signOut(auth).then(() => {
-                // 登出後，onAuthStateChanged 會觸發「未登入」，下面的邏輯會自動把他踢回 index.html
                 alert("已登出！");
             });
         });
@@ -128,7 +153,7 @@ async function ensureUserProfile(user) {
         email: user.email || '',
         photoURL: user.photoURL || '',
         role: 'student', //先自動設為學生
-        status: 'offline',//先自動給予離線狀態
+        status: 'online', // 登入時設為線上
         updatedAt: serverTimestamp(),
     };
 
@@ -137,4 +162,68 @@ async function ensureUserProfile(user) {
     } else {
         await updateDoc(userRef, baseData);
     }
+
+    // 設定線上/離線狀態偵測
+    setupPresenceSystem(user.uid);
+}
+
+// 新增：線上/離線狀態偵測系統
+function setupPresenceSystem(userId) {
+    // 使用 Realtime Database 來偵測連線狀態
+    const userStatusDatabaseRef = ref(rtdb, `/status/${userId}`);
+    
+    // Firestore 的用戶文件參考
+    const userStatusFirestoreRef = doc(db, "users-1141_0178", userId);
+
+    // Realtime Database 的特殊參考，用來偵測連線狀態
+    const isOfflineForDatabase = {
+        state: 'offline',
+        last_changed: new Date().getTime(),
+    };
+
+    const isOnlineForDatabase = {
+        state: 'online',
+        last_changed: new Date().getTime(),
+    };
+
+    const isOfflineForFirestore = {
+        status: 'offline',
+        updatedAt: serverTimestamp(),
+    };
+
+    const isOnlineForFirestore = {
+        status: 'online',
+        updatedAt: serverTimestamp(),
+    };
+
+    // 監聽 Firebase Realtime Database 的 .info/connected 節點
+    // 這個特殊節點會在連線狀態改變時自動更新
+    const connectedRef = ref(rtdb, '.info/connected');
+    
+    onValue(connectedRef, (snapshot) => {
+        if (snapshot.val() === false) {
+            // 客戶端已斷線，不需要做任何事
+            // onDisconnect 會自動觸發
+            return;
+        }
+
+        // 客戶端已連線，設定斷線時要執行的操作
+        onDisconnect(userStatusDatabaseRef)
+            .set(isOfflineForDatabase)
+            .then(() => {
+                // 設定當前為線上狀態
+                set(userStatusDatabaseRef, isOnlineForDatabase);
+                
+                // 同時更新 Firestore
+                updateDoc(userStatusFirestoreRef, isOnlineForFirestore)
+                    .catch(err => console.error("更新 Firestore 狀態失敗:", err));
+            });
+    });
+
+    // 監聽 beforeunload 事件（用戶關閉分頁/瀏覽器）
+    window.addEventListener('beforeunload', () => {
+        // 嘗試同步更新為離線（可能不會成功，因為瀏覽器可能會立即關閉）
+        set(userStatusDatabaseRef, isOfflineForDatabase);
+        updateDoc(userStatusFirestoreRef, isOfflineForFirestore);
+    });
 }
