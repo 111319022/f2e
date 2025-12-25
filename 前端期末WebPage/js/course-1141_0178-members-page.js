@@ -30,9 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const sortByStatusThenName = (arr) => {
+            const rank = (status) => {
+                if (status === 'online') return 0;      // 線上置前
+                if (status === 'withdrawn') return 2;   // 退選置底
+                return 1;                                // 其他(離線)其次
+            };
             return arr.slice().sort((a, b) => {
-                const sa = a.status === 'online' ? 0 : 1;
-                const sb = b.status === 'online' ? 0 : 1;
+                const sa = rank(a.status);
+                const sb = rank(b.status);
                 if (sa !== sb) return sa - sb;
                 const an = a.name || '';
                 const bn = b.name || '';
@@ -93,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 if (member.status === 'online') {
                     badgeHtml = '<span class="badge" style="background-color: #00BB00; color: white;">線上</span>';
+                } else if (member.status === 'withdrawn') {
+                    badgeHtml = '<span class="badge" style="background-color: #000000; color: white;">已退選</span>';
                 } else {
                     badgeHtml = '<span class="badge bg-light text-secondary border">離線</span>';
                 }
