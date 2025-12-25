@@ -149,3 +149,21 @@
 .card::before {
     display: none !important;
 }
+/* Dark mode 的移除效果*/
+.dark-mode .card:hover {
+ 
+    background: var(--surface-color, #1e1e1e) !important; 
+
+    box-shadow: none !important; 
+
+    border-color: var(--border-color) !important;
+
+    transform: none !important;
+}
+.dark-mode .card.bg-primary,
+.dark-mode .card.bg-primary:hover {
+    background-color: var(--bs-primary) !important; /* 保持藍色 */
+    color: #fff !important;
+    border-color: var(--bs-primary) !important;
+    box-shadow: none !important;
+    transform: none !important;}
