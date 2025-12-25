@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             console.log("登入成功，準備跳轉...");
                         })
                         .catch((error) => {
-                            // 🔥 關鍵修改：直接彈出視窗告訴你錯在哪裡
+                            // 彈窗顯示錯誤
                             console.error("詳細錯誤:", error);
                             alert(`登入失敗！\n\n錯誤代碼: ${error.code}\n錯誤訊息: ${error.message}`);
                         });
@@ -127,8 +127,8 @@ async function ensureUserProfile(user) {
         name: user.displayName || '未命名使用者',
         email: user.email || '',
         photoURL: user.photoURL || '',
-        role: 'student',
-        status: 'online',
+        role: 'student', //先自動設為學生
+        status: 'offline',//先自動給予離線狀態
         updatedAt: serverTimestamp(),
     };
 
