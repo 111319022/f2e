@@ -124,3 +124,28 @@
 #course-announcement-list .list-group-item p {
     margin-bottom: 0;
 }
+
+/* =========================================
+   !!!覆寫 style.css 的卡片特效
+   ========================================= */
+
+/* 1. 移除卡片本身的過渡動畫與動態陰影 */
+.card {
+    transition: none !important;       /* 停止所有緩動效果 */
+    transform: none !important;        /* 禁止卡片位移 */
+
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important; 
+}
+
+/* 2. 移除滑鼠懸停時的浮動&變色 */
+.card:hover {
+    transform: none !important;        
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important; /* shadow不加深 */
+    background: var(--surface-color, #ffffff) !important; /* 背景不變色 */
+    border-color: rgba(0,0,0,0.125) !important; /* 邊框不變色 */
+}
+
+/* 3. 移除光影掃過的效果*/
+.card::before {
+    display: none !important;
+}
