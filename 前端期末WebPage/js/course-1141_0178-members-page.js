@@ -29,6 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return member.role === currentFilter;
         });
 
+        const sortByStatusThenName = (arr) => {
+            return arr.slice().sort((a, b) => {
+                const sa = a.status === 'online' ? 0 : 1;
+                const sb = b.status === 'online' ? 0 : 1;
+                if (sa !== sb) return sa - sb;
+                const an = a.name || '';
+                const bn = b.name || '';
+                return an.localeCompare(bn);
+            });
+        };
+
         if (filteredData.length === 0) {
             listContainer.innerHTML = `<li class="list-group-item text-center text-muted py-4">沒有找到相關成員</li>`;
             return;
@@ -38,39 +49,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const dataToRender = currentFilter === 'all'
             ? (() => {
                 const teacher = filteredData.find(m => m.role === 'teacher');
+                const assistants = filteredData.filter(m => m.role === 'assistant');
                 const me = filteredData.find(m => currentUser && m.email === currentUser.email);
-                const rest = filteredData.filter(m => {
+
+                const others = filteredData.filter(m => {
                     const isTeacher = teacher && m.email === teacher.email;
+                    const isAssistant = assistants.some(a => a.email === m.email);
                     const isMe = me && m.email === me.email;
-                    return !isTeacher && !isMe;
+                    return !isTeacher && !isAssistant && !isMe;
                 });
 
-                const restSorted = rest.slice().sort((a, b) => {
-                    const sa = a.status === 'online' ? 0 : 1;
-                    const sb = b.status === 'online' ? 0 : 1;
-                    if (sa !== sb) return sa - sb;
-                    const an = a.name || '';
-                    const bn = b.name || '';
-                    return an.localeCompare(bn);
-                });
+                const assistantsSorted = sortByStatusThenName(assistants);
+                const restSorted = sortByStatusThenName(others);
 
                 const result = [];
                 if (teacher) result.push(teacher);
-                if (me && (!teacher || me.email !== teacher.email)) result.push(me);
+                assistantsSorted.forEach(a => result.push(a));
+
+                if (me && me.role !== 'teacher' && me.role !== 'assistant') {
+                    result.push(me);
+                }
+
                 return result.concat(restSorted);
             })()
             : (() => {
                 const me = filteredData.find(m => currentUser && m.email === currentUser.email);
                 const rest = filteredData.filter(m => !(me && m.email === me.email));
 
-                const restSorted = rest.slice().sort((a, b) => {
-                    const sa = a.status === 'online' ? 0 : 1;
-                    const sb = b.status === 'online' ? 0 : 1;
-                    if (sa !== sb) return sa - sb;
-                    const an = a.name || '';
-                    const bn = b.name || '';
-                    return an.localeCompare(bn);
-                });
+                const restSorted = sortByStatusThenName(rest);
 
                 const result = [];
                 if (me) result.push(me);
