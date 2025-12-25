@@ -140,7 +140,7 @@
                         </li>
                         <li class="list-group-item">
                             <span>剩餘時間</span>
-                            <div class="text-danger fw-bold">已經超過應繳交時間: 11 小時 17 分鐘</div>
+                            <div class="text-danger fw-bold" id="remaining-time" data-deadline="2025-10-22T00:00:00+08:00">計算中...</div>
                         </li>
                     </ul>
                 </div>
@@ -225,5 +225,44 @@
     <script src="js/main.js"></script>
     
     <script type="module" src="js/firebase-upload.js"></script>
+    <script>
+    // 更新剩餘時間倒數
+    (() => {
+        const el = document.getElementById('remaining-time');
+        if (!el) return;
+        const deadlineStr = el.dataset.deadline;
+        const deadline = new Date(deadlineStr);
+
+        const formatDuration = (ms) => {
+            const totalSeconds = Math.max(0, Math.floor(Math.abs(ms) / 1000));
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            if (days > 0) return `${days} 天 ${hours} 小時 ${minutes} 分鐘`;
+            if (hours > 0) return `${hours} 小時 ${minutes} 分鐘`;
+            return `${minutes} 分鐘`;
+        };
+
+        const tick = () => {
+            const now = new Date();
+            const diff = deadline.getTime() - now.getTime();
+            if (diff <= 0) {
+                el.textContent = `已超過 ${formatDuration(diff)}`;
+                el.classList.remove('text-success');
+                el.classList.add('text-danger');
+                return true;
+            }
+            el.textContent = `剩餘 ${formatDuration(diff)}`;
+            el.classList.remove('text-danger');
+            el.classList.add('text-success');
+            return true;
+        };
+
+        // 執行一次，之後每分鐘更新
+        if (tick()) {
+            setInterval(() => tick(), 60000);
+        }
+    })();
+    </script>
 </body>
 </html>
