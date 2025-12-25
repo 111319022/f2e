@@ -81,10 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1. 判斷角色與狀態標籤
             let badgeHtml = '';
             if (member.role === 'teacher') {
-                badgeHtml = '<span class="badge bg-primary">教師</span>';
+                badgeHtml = '<span class="badge" style="background-color: #930000; color: white;">教師</span>';
+            } else if (member.role === 'assistant') {
+                badgeHtml = '<span class="badge" style="background-color: #7d5ddeff; color: white;">助教</span>';
             } else {
                 if (member.status === 'online') {
-                    badgeHtml = '<span class="badge bg-success">線上</span>';
+                    badgeHtml = '<span class="badge" style="background-color: #00BB00; color: white;">線上</span>';
                 } else {
                     badgeHtml = '<span class="badge bg-light text-secondary border">離線</span>';
                 }
